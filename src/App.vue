@@ -1,11 +1,13 @@
 <template>
   <v-app>
-    <v-main>
-      <router-view />
+    <v-main style="background-color: rgb(var(--v-theme-primary))">
+      <v-container style="height: 100%">
+        <router-view />
+      </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script setup>
-  //
+//
 </script>
