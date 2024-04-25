@@ -5,16 +5,18 @@
  */
 
 // Plugins
-import { registerPlugins } from '@/plugins'
-
+import { registerPlugins } from "@/plugins";
+import ApiService from "@/services/api";
 // Components
-import App from './App.vue'
+import App from "./App.vue";
 
 // Composables
-import { createApp } from 'vue'
+import { createApp } from "vue";
 
-const app = createApp(App)
+ApiService.init(import.meta.env.VITE_API_URL);
+ApiService.mountInterceptor();
+const app = createApp(App);
 
-registerPlugins(app)
+registerPlugins(app);
 
-app.mount('#app')
+app.mount("#app");
