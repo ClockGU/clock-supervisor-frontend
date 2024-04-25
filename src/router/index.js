@@ -8,9 +8,11 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LoginView from "@/views/LoginView.vue";
 import ContentView from "@/views/ContentView.vue";
+import LandingView from "@/views/LandingView.vue";
 
 const routes = [
-  { path: "/", component: LoginView },
+  { path: "/", component: LandingView },
+  { path: "/login", component: LoginView },
   { path: "/main", component: ContentView }
 ];
 
