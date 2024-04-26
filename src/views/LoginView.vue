@@ -29,19 +29,32 @@ onMounted(async () => {
     });
     await store.dispatch("login", response.data);
   } catch {
-    // TODO: Specific Error handling
+    await store.dispatch(
+      "addError",
+      "Ein Problem ist aufgetreten (Code=TokenTransactionFromBackend). Bitte Kontaktieren sie den Support."
+    );
     await store.dispatch("logout");
-    await router.push("/");
-    await store.dispatch("unsetLoading");
+    setTimeout(async () => {
+      await router.push("/");
+      await store.dispatch("unsetErrorLoading");
+    }, 10000);
+    return;
   }
   try {
     const response = await ApiService.get("/auth/users/me/");
     await store.dispatch("setUser", response.data);
   } catch {
     // TODO: Specific Error handling
+    await store.dispatch(
+      "addError",
+      "Ein Problem ist aufgetreten (Code=UserTransactionFromBackend). Bitte Kontaktieren sie den Support."
+    );
     await store.dispatch("logout");
-    await router.push("/");
-    await store.dispatch("unsetLoading");
+    setTimeout(async () => {
+      await router.push("/");
+      await store.dispatch("unsetErrorLoading");
+    }, 10000);
+    return;
   }
   await router.push("/main");
   await store.dispatch("unsetLoading");

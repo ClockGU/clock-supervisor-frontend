@@ -4,12 +4,11 @@
       <v-container style="height: 100%">
         <router-view />
       </v-container>
-      <v-overlay :model-value="store.getters.isLoading" persistent> </v-overlay>
+      <LoadingOveray />
     </v-main>
   </v-app>
 </template>
 
 <script setup>
-import { useStore } from "vuex";
-const store = useStore();
+import LoadingOveray from "@/components/LoadingOveray.vue";
 </script>
