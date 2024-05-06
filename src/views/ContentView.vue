@@ -9,9 +9,9 @@ const store = useStore();
 </script>
 
 <template>
-  <v-row align="center" justify="center" style="height: 100%">
+  <v-row justify="center" style="height: 100%">
     <v-col class="d-flex" cols="12">
-      <v-sheet>
+      <v-sheet style="width: 100%; height: 100%">
         <AdminToolbar></AdminToolbar>
         <MonthSwitcher></MonthSwitcher>
         <ReportManagement></ReportManagement>

@@ -113,6 +113,7 @@ onMounted(async () => {
     await store.dispatch("unsetLoading");
     return;
   }
+  console.log(store.getters.user);
   await router.push("/main");
   await store.dispatch("unsetLoading");
 });
