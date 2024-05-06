@@ -51,8 +51,9 @@ async function logout() {
 }
 async function submit() {
   await store.dispatch("setIsLoading");
+  let response;
   try {
-    const response = await ApiService.post("/supervisor/verify/", {
+    response = await ApiService.post("/supervisor/verify/", {
       auth_key: token.value
     });
   } catch (e) {
