@@ -5,6 +5,7 @@ const state = () => ({
   accessToken: undefined,
   refreshToken: undefined,
   user: undefined,
+  isLoggedIn: undefined,
   globalErrors: []
 });
 
@@ -13,6 +14,7 @@ const getters = {
   accessToken: (state) => state.accessToken,
   refreshToken: (state) => state.refreshToken,
   user: (state) => state.user,
+  isLoggedIn: (state) => state.user !== undefined,
   globalErrors: (state) => state.globalErrors
 };
 
@@ -36,6 +38,8 @@ const actions = {
   unsetErrorLoading: ({ commit }) => {
     commit("setLoading", false);
     commit("clearGlobalErrors");
+    commit("setUser", undefined);
+    ApiService.removeSingleHeader("Authorization");
   },
   login: ({ commit }, payload) => {
     commit("setAccessToken", payload.access_token);
