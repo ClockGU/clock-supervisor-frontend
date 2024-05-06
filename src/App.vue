@@ -4,11 +4,11 @@
       <v-container style="height: 100%">
         <router-view />
       </v-container>
-      <LoadingOveray />
+      <LoadingOverlay />
     </v-main>
   </v-app>
 </template>
 
 <script setup>
-import LoadingOveray from "@/components/LoadingOveray.vue";
+import LoadingOverlay from "@/components/LoadingOverlay.vue";
 </script>
