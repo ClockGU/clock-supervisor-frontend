@@ -20,16 +20,27 @@ const formattedDate = computed(() => {
 </script>
 
 <template>
-  <div>
-    <v-btn variant="text" icon @click="goPrev">
-      <v-icon>{{ icons.prev }}</v-icon></v-btn
+  <div
+    style="
+      min-width: 300px;
+      min-height: 50px;
+      display: flex;
+      justify-content: center;
+    "
+  >
+    <v-btn
+      class="justify-center"
+      variant="text"
+      :icon="icons.prev"
+      @click="goPrev"
     >
-    <span>
+    </v-btn>
+    <v-spacer />
+    <span style="align-self: center">
       {{ formattedDate }}
     </span>
-    <v-btn variant="text" icon @click="goNext"
-      ><v-icon>{{ icons.next }}</v-icon></v-btn
-    >
+    <v-spacer />
+    <v-btn variant="text" :icon="icons.next" @click="goNext"></v-btn>
   </div>
 </template>
 
