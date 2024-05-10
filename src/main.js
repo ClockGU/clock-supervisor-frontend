@@ -7,11 +7,14 @@
 // Plugins
 import { registerPlugins } from "@/plugins";
 import ApiService from "@/services/api";
+import { de } from "date-fns/locale";
+setDefaultOptions({ locale: de });
 // Components
 import App from "./App.vue";
 
 // Composables
 import { createApp } from "vue";
+import { setDefaultOptions } from "date-fns";
 
 ApiService.init(import.meta.env.VITE_API_URL);
 ApiService.mountInterceptor();
