@@ -4,8 +4,12 @@ import AdminToolbar from "@/components/AdminToolbar.vue";
 import MonthSwitcher from "@/components/MonthSwitcher.vue";
 import ReportManagement from "@/components/ReportManagement.vue";
 import ReportingDisplay from "@/components/ReportingDisplay.vue";
+import { ref } from "vue";
 
 const store = useStore();
+
+const viewDate = ref(new Date());
+viewDate.value.setDate(1);
 </script>
 
 <template>
@@ -13,7 +17,7 @@ const store = useStore();
     <v-col class="d-flex" cols="12">
       <v-sheet style="width: 100%; height: 100%">
         <AdminToolbar></AdminToolbar>
-        <MonthSwitcher></MonthSwitcher>
+        <MonthSwitcher v-model="viewDate"></MonthSwitcher>
         <ReportManagement></ReportManagement>
         <ReportingDisplay></ReportingDisplay>
       </v-sheet>

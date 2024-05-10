@@ -1,22 +1,21 @@
 <script setup>
-import { computed, reactive, ref } from "vue";
+import { computed, reactive } from "vue";
 import { addMonths, subMonths, format } from "date-fns";
 import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
 const icons = reactive({
   prev: mdiChevronLeft,
   next: mdiChevronRight
 });
-const date = ref(new Date());
-date.value.setDate(1);
+const model = defineModel({ type: Date });
 function goPrev() {
-  date.value = subMonths(date.value, 1);
+  model.value = subMonths(model.value, 1);
 }
 function goNext() {
-  date.value = addMonths(date.value, 1);
+  model.value = addMonths(model.value, 1);
 }
 
 const formattedDate = computed(() => {
-  return format(date.value, "MMMM yyyy");
+  return format(model.value, "MMMM yyyy");
 });
 </script>
 
