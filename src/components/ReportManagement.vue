@@ -11,15 +11,16 @@ const loadingAdd = ref(false);
 const loadingRemove = ref(false);
 const icons = reactive({ closeIcon: mdiClose });
 async function addReference() {
+  let data = {};
   loadingAdd.value = true;
   setElementBlur();
+  console.log();
   try {
-    await store.dispatch("addSupervisedObject", newReference);
-    const response = await ApiService.patch("/auth/users/me/", {
-      REFERENCE_FIELD_NAME: managedReferences
-    });
+    await store.dispatch("addSupervisedObject", newReference.value);
+    data[REFERENCE_FIELD_NAME] = managedReferences.value;
+    const response = await ApiService.patch("/auth/users/me/", data);
   } catch (e) {
-    await store.dispatch("popSupervisedObject", newReference);
+    await store.dispatch("popSupervisedObject", newReference.value);
     await store.dispatch(
       "addError",
       "Ein Fehler beim hinzufügen eines Objekts ist aufgetreten."
@@ -30,13 +31,13 @@ async function addReference() {
   loadingAdd.value = false;
 }
 async function removeReference(reference) {
+  let data = {};
   loadingRemove.value = true;
   setElementBlur();
   try {
     await store.dispatch("popSupervisedObject", reference);
-    const response = await ApiService.patch("/auth/users/me/", {
-      REFERENCE_FIELD_NAME: managedReferences
-    });
+    data[REFERENCE_FIELD_NAME] = managedReferences.value;
+    const response = await ApiService.patch("/auth/users/me/", data);
   } catch (e) {
     await store.dispatch("addSupervisedObject", reference);
     await store.dispatch(
@@ -87,7 +88,7 @@ function setElementBlur() {
         <v-text-field
           v-model="newReference"
           class="mr-3"
-          label="Neues Object zuordnen"
+          label="Neues Objekt zuordnen"
         >
           <template #append-innner>
             <v-progress-circular
@@ -99,6 +100,7 @@ function setElementBlur() {
           </template>
         </v-text-field>
         <v-btn
+          :disabled="newReference === ''"
           class="ml-3"
           style="transform: translate(0px, -12px)"
           @click="addReference"
