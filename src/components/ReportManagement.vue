@@ -5,6 +5,9 @@ import { mdiClose } from "@mdi/js";
 
 const store = useStore();
 const managedReferences = ref(store.getters.user.supervised_objects);
+const newReference = ref("");
+const loadingAdd = ref(false);
+const loadingRemove = ref(false);
 const icons = reactive({ closeIcon: mdiClose });
 async function removeReference(reference) {
   setElementBlur();
@@ -12,6 +15,8 @@ async function removeReference(reference) {
 function setElementBlur() {
   setTimeout(() => document.activeElement.blur(), 200);
 }
+
+function addReference() {}
 </script>
 
 <template>
@@ -24,6 +29,14 @@ function setElementBlur() {
         style="caret-color: transparent"
         @click.prevent="setElementBlur"
       >
+        <template #append-inner>
+          <v-progress-circular
+            v-if="loadingRemove"
+            color="primary"
+            indeterminate
+          >
+          </v-progress-circular>
+        </template>
         <v-chip
           v-for="reference in managedReferences"
           :key="reference"
@@ -38,7 +51,28 @@ function setElementBlur() {
           </template>
         </v-chip>
       </v-text-field>
-      <v-text-field> </v-text-field>
+      <div class="d-flex align-center">
+        <v-text-field
+          v-model="newReference"
+          class="mr-3"
+          label="Neues Object zuordnen"
+        >
+          <template #append-innner>
+            <v-progress-circular
+              v-if="loadingAdd"
+              color="primary"
+              indeterminate
+            >
+            </v-progress-circular>
+          </template>
+        </v-text-field>
+        <v-btn
+          class="ml-3"
+          style="transform: translate(0px, -12px)"
+          @click="addReference"
+          >Hinzufügen</v-btn
+        >
+      </div>
     </v-card-text>
   </v-card>
 </template>
