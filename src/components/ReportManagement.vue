@@ -3,12 +3,32 @@ import { useStore } from "vuex";
 import { ref, reactive } from "vue";
 import { mdiClose } from "@mdi/js";
 import { REFERENCE_FIELD_NAME } from "@/main";
+import ApiService from "@/services/api";
 const store = useStore();
 const managedReferences = ref(store.getters.user.supervised_objects);
 const newReference = ref("");
 const loadingAdd = ref(false);
 const loadingRemove = ref(false);
 const icons = reactive({ closeIcon: mdiClose });
+async function addReference() {
+  loadingAdd.value = true;
+  setElementBlur();
+  try {
+    await store.dispatch("addSupervisedObject", newReference);
+    const response = await ApiService.patch("/auth/users/me/", {
+      REFERENCE_FIELD_NAME: managedReferences
+    });
+  } catch (e) {
+    await store.dispatch("popSupervisedObject", newReference);
+    await store.dispatch(
+      "addError",
+      "Ein Fehler beim hinzufügen eines Objekts ist aufgetreten."
+    );
+    return;
+  }
+  newReference.value = "";
+  loadingAdd.value = false;
+}
 async function removeReference(reference) {
   loadingRemove.value = true;
   setElementBlur();
@@ -21,7 +41,7 @@ async function removeReference(reference) {
     await store.dispatch("addSupervisedObject", reference);
     await store.dispatch(
       "addError",
-      "Ein Fehler beim hinzufügen eines Objekts ist aufgetreten."
+      "Ein Fehler beim entfernen eines Objekts ist aufgetreten."
     );
   }
   loadingRemove.value = false;
@@ -29,8 +49,6 @@ async function removeReference(reference) {
 function setElementBlur() {
   setTimeout(() => document.activeElement.blur(), 200);
 }
-
-function addReference() {}
 </script>
 
 <template>
