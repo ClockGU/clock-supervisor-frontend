@@ -26,7 +26,10 @@ const mutations = {
     state.accessToken = undefined;
     state.refreshToken = undefined;
   },
-  setUser: (state, value) => (state.user = value),
+  setUser: (state, value) => {
+    state.user = value;
+    state.user.supervised_objects = ["22167312", "aa230bfd"];
+  },
   addError: (state, value) => state.globalErrors.push(value),
   removeError: (state, value) => state.globalErrors.pop(value),
   clearGlobalErrors: (state, value) => (state.globalErrors = [])

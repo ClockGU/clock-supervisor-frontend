@@ -17,13 +17,17 @@ viewDate.value.setDate(1);
     <v-col class="d-flex" cols="12">
       <v-sheet style="width: 100%; height: 100%">
         <AdminToolbar></AdminToolbar>
-        <div class="pa-4">
+        <v-container>
           <v-row justify="center">
             <MonthSwitcher v-model="viewDate"></MonthSwitcher>
           </v-row>
-          <ReportManagement></ReportManagement>
+          <v-row>
+            <v-col>
+              <ReportManagement></ReportManagement>
+            </v-col>
+          </v-row>
           <ReportingDisplay></ReportingDisplay>
-        </div>
+        </v-container>
       </v-sheet>
     </v-col>
   </v-row>
