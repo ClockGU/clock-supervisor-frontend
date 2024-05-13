@@ -2,7 +2,7 @@
 import { useStore } from "vuex";
 import { ref, reactive } from "vue";
 import { mdiClose } from "@mdi/js";
-
+import { REFERENCE_FIELD_NAME } from "@/main";
 const store = useStore();
 const managedReferences = ref(store.getters.user.supervised_objects);
 const newReference = ref("");
@@ -10,7 +10,21 @@ const loadingAdd = ref(false);
 const loadingRemove = ref(false);
 const icons = reactive({ closeIcon: mdiClose });
 async function removeReference(reference) {
+  loadingRemove.value = true;
   setElementBlur();
+  try {
+    await store.dispatch("popSupervisedObject", reference);
+    const response = await ApiService.patch("/auth/users/me/", {
+      REFERENCE_FIELD_NAME: managedReferences
+    });
+  } catch (e) {
+    await store.dispatch("addSupervisedObject", reference);
+    await store.dispatch(
+      "addError",
+      "Ein Fehler beim hinzufügen eines Objekts ist aufgetreten."
+    );
+  }
+  loadingRemove.value = false;
 }
 function setElementBlur() {
   setTimeout(() => document.activeElement.blur(), 200);

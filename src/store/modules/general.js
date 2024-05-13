@@ -30,6 +30,12 @@ const mutations = {
     state.user = value;
     state.user.supervised_objects = ["22167312", "aa230bfd"];
   },
+  popSupervisedObject(state, value) {
+    state.user.supervised_objects.filter((item) => item !== value);
+  },
+  addSupervisedObject(state, value) {
+    state.user.supervised_objects.push(value);
+  },
   addError: (state, value) => state.globalErrors.push(value),
   removeError: (state, value) => state.globalErrors.pop(value),
   clearGlobalErrors: (state, value) => (state.globalErrors = [])
@@ -53,7 +59,13 @@ const actions = {
   setUser: ({ commit }, payload) => commit("setUser", payload),
   addError: ({ commit }, error) => commit("addError", error),
   removeError: ({ commit }, error) => commit("removeError", error),
-  clearGlobalErrors: ({ commit }) => commit("clearGlobalErrors")
+  clearGlobalErrors: ({ commit }) => commit("clearGlobalErrors"),
+  popSupervisedObject({ commit }, value) {
+    commit("popSupervisedObject", value);
+  },
+  addSupervisedObject({ commit }, value) {
+    commit("addSupervisedObject", value);
+  }
 };
 
 export default {

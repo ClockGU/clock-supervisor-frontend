@@ -16,6 +16,8 @@ import App from "./App.vue";
 import { createApp } from "vue";
 import { setDefaultOptions } from "date-fns";
 
+export const REFERENCE_FIELD_NAME = "";
+
 ApiService.init(import.meta.env.VITE_API_URL);
 ApiService.mountInterceptor();
 const app = createApp(App);
