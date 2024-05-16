@@ -26,7 +26,11 @@ viewDate.value.setDate(1);
               <ReportManagement></ReportManagement>
             </v-col>
           </v-row>
-          <ReportingDisplay></ReportingDisplay>
+          <v-row>
+            <v-col>
+              <ReportingDisplay :date="viewDate"></ReportingDisplay>
+            </v-col>
+          </v-row>
         </v-container>
       </v-sheet>
     </v-col>
