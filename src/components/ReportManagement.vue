@@ -14,7 +14,6 @@ async function addReference() {
   let data = {};
   loadingAdd.value = true;
   setElementBlur();
-  console.log();
   try {
     await store.dispatch("addSupervisedObject", newReference.value);
     data[REFERENCE_FIELD_NAME] = managedReferences.value;
@@ -47,6 +46,8 @@ async function removeReference(reference) {
   }
   loadingRemove.value = false;
 }
+
+// Workaround for Textfield. The "active" state upon clicking looks weird if it is not reset
 function setElementBlur() {
   setTimeout(() => document.activeElement.blur(), 200);
 }
