@@ -1,15 +1,13 @@
 <script setup>
 import { computed, ref, watch } from "vue";
-import {mdiCircle} from "@mdi/js";
-import {parse} from "date-fns"
-import general from "@/store/modules/general";
+import {mdiCircle, mdiClose, mdiInformationOutline} from "@mdi/js";
 import {parseHHmmToMinutes} from "@/parsers/time";
 const props = defineProps({
   date: Date
 });
 
 const reports = computed(() => getReports(props.date));
-
+const dialog = ref(false);
 function getWorktimeColor(report) {
   const debitWorktime = parseHHmmToMinutes(report.general.debit_worktime)
   const netWorktime = parseHHmmToMinutes(report.general.net_worktime)
@@ -61,23 +59,77 @@ function getReports(dateValue) {
 </script>
 
 <template>
-  <v-expansion-panels>
-    <v-expansion-panel v-for="report in reports" :key="report._id">
-      <v-expansion-panel-title>
-        <v-row justify="center"  no-gutters>
-          <v-col cols="6">
-            <p>{{ report.general.user_name + " " + "<identifier>" }}</p>
-          </v-col>
-          <v-col style="align-content: center" cols="3">
-            <div class="d-inline-flex" style="align-items: center"> <p>Nettoarbeitszeit:</p><v-icon :color="getWorktimeColor(report)">{{ mdiCircle }}</v-icon></div>
-          </v-col>
-          <v-col cols="3">
-            <div class="d-inline-flex" style="align-items: center"> <p>Verstöße:</p><v-icon :color="getNotesColor(report)">{{ mdiCircle }}</v-icon></div>
-          </v-col>
-        </v-row>
-      </v-expansion-panel-title>
-    </v-expansion-panel>
-  </v-expansion-panels>
+  <v-row justify="end">
+    <v-col>
+      <v-dialog v-model="dialog" location="center" content-class="justify-content-center">
+        <template #activator="{ props }">
+          <div class="d-inline-flex" style="align-items: center" v-bind="props">
+            <p>Legende </p><v-icon color="grey">{{ mdiInformationOutline }}</v-icon>
+          </div>
+        </template>
+        <v-card width="600">
+          <v-toolbar color="white">
+            <v-card-title style="width: auto;">
+              Farbkodierung
+            </v-card-title>
+            <v-spacer/>
+            <v-btn variant="plain" :icon="mdiClose" @click="dialog = !dialog"></v-btn>
+          </v-toolbar>
+          <v-card-text>
+            <p style="margin-bottom: 8px;">Nettoarbeitszeit</p>
+            <div>
+              <v-icon color="success">{{ mdiCircle }}</v-icon> <span> Keine Unterstunden </span>
+            </div>
+            <div>
+              <v-icon color="warning">{{ mdiCircle }}</v-icon> <span> Hat Unterstunden </span>
+            </div>
+            <div>
+              <v-icon color="error">{{ mdiCircle }}</v-icon> <span> Weniger als 20% Sollarbeitszeit </span>
+            </div>
+
+            <p style="margin-bottom: 8px; margin-top: 8px">Verstöße</p>
+            <div>
+              <v-icon color="success">{{ mdiCircle }}</v-icon> <span> Keine Verstöße </span>
+            </div>
+            <div>
+              <v-icon color="warning">{{ mdiCircle }}</v-icon> <span> Weniger als 6 Verstöße </span>
+            </div>
+            <div>
+              <v-icon color="error">{{ mdiCircle }}</v-icon> <span> Mehr als 6 Verstöße </span>
+            </div>
+
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+    </v-col>
+  </v-row>
+  <v-row>
+    <v-expansion-panels>
+      <v-expansion-panel v-for="report in reports" :key="report._id">
+        <v-expansion-panel-title>
+          <v-row justify="center"  no-gutters>
+            <v-col cols="6">
+              <p>{{ report.general.user_name + " " + "<identifier>" }}</p>
+            </v-col>
+            <v-col style="align-content: center" cols="3">
+              <div class="d-inline-flex" style="align-items: center"> <p>Nettoarbeitszeit:</p><v-icon :color="getWorktimeColor(report)">{{ mdiCircle }}</v-icon></div>
+            </v-col>
+            <v-col cols="3">
+              <div class="d-inline-flex" style="align-items: center"> <p>Verstöße:</p><v-icon :color="getNotesColor(report)">{{ mdiCircle }}</v-icon></div>
+            </v-col>
+          </v-row>
+        </v-expansion-panel-title>
+      </v-expansion-panel>
+    </v-expansion-panels>
+  </v-row>
 </template>
 
-<style scoped lang="sass"></style>
+<style lang="css">
+.justify-content-center {
+  flex-direction: row !important;
+  justify-content: center
+}
+.v-card-text > div {
+  display: block;
+}
+</style>
