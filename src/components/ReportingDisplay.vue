@@ -24,6 +24,19 @@ function getWorktimeColor(report) {
 
 }
 
+function getNotesColor(report) {
+  let noteCount =  0;
+  for (const day in report.days_content) {
+    noteCount += report.days_content[day].notes !== ""
+  }
+  if (noteCount === 0){
+    return "success";
+  } else if (noteCount < 6) {
+    return "warn";
+  } else {
+    return "error";
+  }
+}
 function getReports(dateValue) {
   return [
     {
@@ -58,7 +71,9 @@ function getReports(dateValue) {
           <v-col style="align-content: center" cols="3">
             <div class="d-inline-flex" style="align-items: center"> <p>Nettoarbeitszeit:</p><v-icon :color="getWorktimeColor(report)">{{ mdiCircle }}</v-icon></div>
           </v-col>
-          <v-col cols="3"></v-col>
+          <v-col cols="3">
+            <div class="d-inline-flex" style="align-items: center"> <p>Verstöße:</p><v-icon :color="getNotesColor(report)">{{ mdiCircle }}</v-icon></div>
+          </v-col>
         </v-row>
       </v-expansion-panel-title>
     </v-expansion-panel>
