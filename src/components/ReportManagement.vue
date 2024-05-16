@@ -80,7 +80,7 @@ function setElementBlur() {
           <template #close>
             <v-icon
               :icon="icons.closeIcon"
-              @click.stop="removeReference(reference)"
+              @click.prevent="removeReference(reference)"
             />
           </template>
         </v-chip>
