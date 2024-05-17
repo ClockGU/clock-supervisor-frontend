@@ -16,7 +16,7 @@ import App from "./App.vue";
 import { createApp } from "vue";
 import { setDefaultOptions } from "date-fns";
 
-export const REFERENCE_FIELD_NAME = "";
+export const REFERENCE_FIELD_NAME = "supervised_references";
 
 ApiService.init(import.meta.env.VITE_API_URL);
 ApiService.mountInterceptor();
