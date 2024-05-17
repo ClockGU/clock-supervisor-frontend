@@ -86,9 +86,9 @@ function getReports(dateValue) {
     <v-col>
       <v-dialog v-model="dialog" location="center" content-class="justify-content-center">
         <template #activator="{ props }">
-          <div class="d-inline-flex" style="align-items: center" v-bind="props">
-            <p>Legende </p><v-icon color="grey">{{ mdiInformationOutline }}</v-icon>
-          </div>
+          <button class="d-inline-flex" style="align-items: center" v-bind="props">
+            <p>Legende </p> <v-icon class="ml-2" color="grey">{{ mdiInformationOutline }}</v-icon>
+          </button>
         </template>
         <v-card width="600">
           <v-toolbar color="white">
@@ -147,8 +147,8 @@ function getReports(dateValue) {
   </v-row>
 </template>
 
-<style lang="css">
-.justify-content-center {
+<style scoped lang="css">
+:deep(.justify-content-center) {
   flex-direction: row !important;
   justify-content: center
 }
