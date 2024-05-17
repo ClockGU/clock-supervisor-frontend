@@ -142,6 +142,42 @@ function getReports(dateValue) {
             </v-col>
           </v-row>
         </v-expansion-panel-title>
+        <v-expansion-panel-text>
+          <v-row>
+              <v-col> Sollarbeitsziet: {{report.general.debit_worktime}}</v-col>
+              <v-col> Nettoarbeitszeit: {{report.general.net_worktime }}</v-col>
+              <v-col> Übertrag aus Vormonat: {{ report.general.last_month_carry_over }}</v-col>
+              <v-col> Übertrag: {{ report.general.next_month_carry_over }}</v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-table >
+                <thead>
+                <tr>
+                  <th> Datum</th>
+                  <th> Start</th>
+                  <th> Ende</th>
+                  <th> Puse</th>
+                  <th> Arbeitszeit</th>
+                  <th> F/K/U</th>
+                  <th> Notizen</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(obj, day) in report.days_content" :key="day + report.id">
+                  <td>{{ day }}</td>
+                  <td>{{ obj.started }}</td>
+                  <td>{{ obj.stopped }}</td>
+                  <td>{{ obj.break_time }}</td>
+                  <td>{{ obj.work_time }}</td>
+                  <td>{{ obj.absence_type }}</td>
+                  <td>{{ obj.notes }}</td>
+                </tr>
+                </tbody>
+              </v-table>
+            </v-col>
+          </v-row>
+        </v-expansion-panel-text>
       </v-expansion-panel>
     </v-expansion-panels>
   </v-row>
