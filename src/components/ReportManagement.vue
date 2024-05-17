@@ -5,7 +5,7 @@ import { mdiClose } from "@mdi/js";
 import { REFERENCE_FIELD_NAME } from "@/main";
 import ApiService from "@/services/api";
 const store = useStore();
-const managedReferences = ref(store.getters.user.supervised_objects);
+const managedReferences = ref(store.getters.user.supervised_references);
 const newReference = ref("");
 const loadingAdd = ref(false);
 const loadingRemove = ref(false);
@@ -15,11 +15,12 @@ async function addReference() {
   loadingAdd.value = true;
   setElementBlur();
   try {
-    await store.dispatch("addSupervisedObject", newReference.value);
+    await store.dispatch("addSupervisedReference", newReference.value);
     data[REFERENCE_FIELD_NAME] = managedReferences.value;
+    console.log(data);
     const response = await ApiService.patch("/auth/users/me/", data);
   } catch (e) {
-    await store.dispatch("popSupervisedObject", newReference.value);
+    await store.dispatch("popSupervisedReference", newReference.value);
     await store.dispatch(
       "addError",
       "Ein Fehler beim hinzufügen eines Objekts ist aufgetreten."
@@ -34,11 +35,11 @@ async function removeReference(reference) {
   loadingRemove.value = true;
   setElementBlur();
   try {
-    await store.dispatch("popSupervisedObject", reference);
+    await store.dispatch("popSupervisedReference", reference);
     data[REFERENCE_FIELD_NAME] = managedReferences.value;
     const response = await ApiService.patch("/auth/users/me/", data);
   } catch (e) {
-    await store.dispatch("addSupervisedObject", reference);
+    await store.dispatch("addSupervisedReference", reference);
     await store.dispatch(
       "addError",
       "Ein Fehler beim entfernen eines Objekts ist aufgetreten."

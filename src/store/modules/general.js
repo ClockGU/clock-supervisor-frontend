@@ -28,13 +28,12 @@ const mutations = {
   },
   setUser: (state, value) => {
     state.user = value;
-    state.user.supervised_objects = ["22167312", "aa230bfd"];
   },
-  popSupervisedObject(state, value) {
-    state.user.supervised_objects.filter((item) => item !== value);
+  popSupervisedReference(state, value) {
+    state.user.supervised_references.filter((item) => item !== value);
   },
-  addSupervisedObject(state, value) {
-    state.user.supervised_objects.push(value);
+  addSupervisedReference(state, value) {
+    state.user.supervised_references.push(value);
   },
   addError: (state, value) => state.globalErrors.push(value),
   removeError: (state, value) => state.globalErrors.pop(value),
@@ -60,11 +59,11 @@ const actions = {
   addError: ({ commit }, error) => commit("addError", error),
   removeError: ({ commit }, error) => commit("removeError", error),
   clearGlobalErrors: ({ commit }) => commit("clearGlobalErrors"),
-  popSupervisedObject({ commit }, value) {
-    commit("popSupervisedObject", value);
+  popSupervisedReference({ commit }, value) {
+    commit("popSupervisedReference", value);
   },
-  addSupervisedObject({ commit }, value) {
-    commit("addSupervisedObject", value);
+  addSupervisedReference({ commit }, value) {
+    commit("addSupervisedReference", value);
   }
 };
 
