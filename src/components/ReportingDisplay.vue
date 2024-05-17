@@ -1,12 +1,20 @@
 <script setup>
-import { computed, ref, watch } from "vue";
+import {computed, ref, watch} from "vue";
 import {mdiCircle, mdiClose, mdiInformationOutline} from "@mdi/js";
 import {parseHHmmToMinutes} from "@/parsers/time";
+import ApiService from "@/services/api";
+import { useStore} from "vuex";
+
 const props = defineProps({
   date: Date
 });
+ const store = useStore();
 
-const reports = computed(() => getReports(props.date));
+const reports = ref([]);
+
+watch(() => props.date, async (newValue) =>{
+  reports.value = await getReports(newValue);
+})
 const dialog = ref(false);
 function getWorktimeColor(report) {
   const debitWorktime = parseHHmmToMinutes(report.general.debit_worktime)
@@ -35,49 +43,15 @@ function getNotesColor(report) {
     return "error";
   }
 }
-function getReports(dateValue) {
-  return [
-    // {
-    //   _id: "65bbaf6253e29fbe5d12910a",
-    //   days_content: {},
-    //   general: {
-    //     user_name: "Grossmüller, Christian",
-    //     personal_number: "",
-    //     contract_name: "100 beamte",
-    //     month: 1,
-    //     year: 2024,
-    //     long_month_name: "Januar",
-    //     debit_worktime: "01:00",
-    //     total_worked_time: "00:00",
-    //     last_month_carry_over: "00:00",
-    //     next_month_carry_over: "-01:00",
-    //     net_worktime: "00:00"
-    //   }
-    // },
-    {'days_content':
-        {
-          '02.05.2024': {'started': '10:00', 'stopped': '14:00', 'break_time': '00:00', 'work_time': '04:00', 'absence_type': '', 'type': 'Schicht', 'notes': ''},
-          '06.05.2024': {'started': '09:00', 'stopped': '12:00', 'break_time': '00:00', 'work_time': '03:00', 'absence_type': '', 'type': 'Schicht', 'notes': ''},
-          '07.05.2024': {'started': '18:00', 'stopped': '22:00', 'break_time': '00:00', 'work_time': '04:00', 'absence_type': '', 'type': 'Schicht', 'notes': '4'},
-          '12.05.2024': {'started': '10:00', 'stopped': '12:00', 'break_time': '00:00', 'work_time': '02:00', 'absence_type': '', 'type': 'Schicht', 'notes': '6'},
-          '15.05.2024': {'started': '14:00', 'stopped': '18:00', 'break_time': '00:00', 'work_time': '04:00', 'absence_type': '', 'type': 'Schicht', 'notes': ''}
-        },
-      'general':
-        {
-          'user_name': 'Grossmüller, Christian',
-          'personal_number': null,
-          'contract_name': '22',
-          'month': 5,
-          'year': 2024,
-          'long_month_name': 'Mai',
-          'debit_worktime': '22:00',
-          'total_worked_time': '17:00',
-          'last_month_carry_over': '00:00',
-          'next_month_carry_over': '-05:00',
-          'net_worktime': '17:00'
-        }
-    }
-  ];
+async function getReports(dateValue) {
+  let response;
+  try {
+    response = await ApiService.get(`/supervisor/reports/${dateValue.getDate()}/${dateValue.getMonth()}/${dateValue.getYear()}`)
+  } catch (e) {
+    await store.dispatch("addError", e);
+      return [];
+  }
+  return response.data;
 }
 </script>
 
