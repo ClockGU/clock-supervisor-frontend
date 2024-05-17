@@ -46,7 +46,7 @@ function getNotesColor(report) {
 async function getReports(dateValue) {
   let response;
   try {
-    response = await ApiService.get(`/supervisor/reports/${dateValue.getDate()}/${dateValue.getMonth()}/${dateValue.getYear()}`)
+    response = await ApiService.get(`/supervisor/reports/${dateValue.getMonth()}/${dateValue.getFullYear()}`)
   } catch (e) {
     await store.dispatch("addError", e);
       return [];
