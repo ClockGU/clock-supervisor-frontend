@@ -86,7 +86,7 @@ function getReports(dateValue) {
     <v-col>
       <v-dialog v-model="dialog" location="center" content-class="justify-content-center">
         <template #activator="{ props }">
-          <button class="d-inline-flex" style="align-items: center" v-bind="props">
+          <button class="icon-center" v-bind="props">
             <p>Legende </p> <v-icon class="ml-2" color="grey">{{ mdiInformationOutline }}</v-icon>
           </button>
         </template>
@@ -101,24 +101,42 @@ function getReports(dateValue) {
           <v-card-text>
             <p style="margin-bottom: 8px;">Nettoarbeitszeit</p>
             <div>
-              <v-icon color="success">{{ mdiCircle }}</v-icon> <span> Keine Unterstunden </span>
+              <div class="icon-center">
+                <v-icon color="success">{{ mdiCircle }}</v-icon>
+                <p> Keine Unterstunden </p>
+              </div>
             </div>
             <div>
-              <v-icon color="warning">{{ mdiCircle }}</v-icon> <span> Hat Unterstunden </span>
+              <div class="icon-center">
+                <v-icon color="warning">{{ mdiCircle }}</v-icon>
+                <p> Hat Unterstunden </p>
+              </div>
             </div>
             <div>
-              <v-icon color="error">{{ mdiCircle }}</v-icon> <span> Weniger als 20% Sollarbeitszeit </span>
+              <div class="icon-center">
+                <v-icon color="error">{{ mdiCircle }}</v-icon>
+                <p> Weniger als 20% Sollarbeitszeit </p>
+              </div>
             </div>
 
             <p style="margin-bottom: 8px; margin-top: 8px">Verstöße</p>
             <div>
-              <v-icon color="success">{{ mdiCircle }}</v-icon> <span> Keine Verstöße </span>
+              <div class="icon-center">
+                <v-icon color="success">{{ mdiCircle }}</v-icon>
+                <span> Keine Verstöße </span>
+              </div>
             </div>
             <div>
-              <v-icon color="warning">{{ mdiCircle }}</v-icon> <span> Weniger als 6 Verstöße </span>
+              <div class="icon-center">
+                <v-icon color="warning">{{ mdiCircle }}</v-icon>
+                <span> Weniger als 6 Verstöße </span>
+              </div>
             </div>
             <div>
-              <v-icon color="error">{{ mdiCircle }}</v-icon> <span> Mehr als 6 Verstöße </span>
+              <div class="icon-center">
+                <v-icon color="error">{{ mdiCircle }}</v-icon>
+                <span> Mehr als 6 Verstöße </span>
+              </div>
             </div>
 
           </v-card-text>
@@ -159,7 +177,18 @@ function getReports(dateValue) {
                   <th> Ende</th>
                   <th> Puse</th>
                   <th> Arbeitszeit</th>
-                  <th> F/K/U</th>
+
+                  <th>
+                    <v-tooltip location="top">
+                      <template #activator="{ props }">
+                        <div class="icon-center" v-bind="props">
+                          <p> F/K/U </p>
+                          <v-icon class="ml-2" color="grey">{{ mdiInformationOutline }}</v-icon>
+                        </div>
+                      </template>
+                      <span>F: Feiertag, K: Krank, U: Urlaub</span>
+                    </v-tooltip>
+                  </th>
                   <th> Notizen</th>
                 </tr>
                 </thead>
@@ -190,5 +219,12 @@ function getReports(dateValue) {
 }
 .v-card-text > div {
   display: block;
+}
+.icon-center {
+  display: inline-flex;
+  align-items: center;
+}
+.v-tooltip :deep(.v-overlay__content) {
+  background: rgb(var(--v-theme-primary-lighten-2));
 }
 </style>
