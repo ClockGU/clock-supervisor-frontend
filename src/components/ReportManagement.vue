@@ -17,7 +17,6 @@ async function addReference() {
   try {
     await store.dispatch("addSupervisedReference", newReference.value);
     data[REFERENCE_FIELD_NAME] = managedReferences.value;
-    console.log(data);
     const response = await ApiService.patch("/auth/users/me/", data);
   } catch (e) {
     await store.dispatch("popSupervisedReference", newReference.value);
