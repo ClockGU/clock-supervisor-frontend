@@ -46,7 +46,7 @@ function getNotesColor(report) {
 async function getReports(dateValue) {
   let response;
   try {
-    response = await ApiService.get(`/supervisor/reports/${dateValue.getMonth()}/${dateValue.getFullYear()}`)
+    response = await ApiService.get(`/supervisor/reports/${dateValue.getMonth()+1}/${dateValue.getFullYear()}`)
   } catch (e) {
     await store.dispatch("addError", e);
       return [];
@@ -171,8 +171,8 @@ async function getReports(dateValue) {
                   <td>{{ day }}</td>
                   <td>{{ obj.started }}</td>
                   <td>{{ obj.stopped }}</td>
-                  <td>{{ obj.break_time }}</td>
-                  <td>{{ obj.work_time }}</td>
+                  <td>{{ obj.breaktime }}</td>
+                  <td>{{ obj.worktime }}</td>
                   <td>{{ obj.absence_type }}</td>
                   <td>{{ obj.notes }}</td>
                 </tr>
