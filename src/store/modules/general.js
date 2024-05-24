@@ -30,7 +30,8 @@ const mutations = {
     state.user = value;
   },
   popSupervisedReference(state, value) {
-    state.user.supervised_references.filter((item) => item !== value);
+    const index = state.user.supervised_references.indexOf(value);
+    state.user.supervised_references.splice(index, 1);
   },
   addSupervisedReference(state, value) {
     state.user.supervised_references.push(value);
