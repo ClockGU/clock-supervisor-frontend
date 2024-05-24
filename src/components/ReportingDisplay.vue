@@ -1,5 +1,5 @@
 <script setup>
-import {computed, ref, watch} from "vue";
+import {onBeforeMount, ref, watch} from "vue";
 import {mdiCircle, mdiClose, mdiInformationOutline} from "@mdi/js";
 import {parseHHmmToMinutes} from "@/parsers/time";
 import ApiService from "@/services/api";
@@ -11,6 +11,8 @@ const props = defineProps({
  const store = useStore();
 
 const reports = ref([]);
+
+onBeforeMount(async()=> reports.value = await getReports(props.date));
 
 watch(() => props.date, async (newValue) =>{
   reports.value = await getReports(newValue);
