@@ -59,10 +59,10 @@ async function getReports(dateValue) {
 
 <template>
   <v-row justify="end">
-    <v-col>
+    <v-col class="d-flex" cols="2">
       <v-dialog v-model="dialog" location="center" content-class="justify-content-center">
         <template #activator="{ props }">
-          <button class="icon-center" v-bind="props">
+          <button class="icon-center" v-bind="props" style="margin-left: auto">
             <p>Legende </p> <v-icon class="ml-2" color="grey">{{ mdiInformationOutline }}</v-icon>
           </button>
         </template>
