@@ -65,6 +65,21 @@ const actions = {
   },
   addSupervisedReference({ commit }, value) {
     commit("addSupervisedReference", value);
+  },
+  async refreshTokens({ commit, dispatch, getters }) {
+    try {
+      const response = await ApiService.post("/auth/jwt/refresh", {
+        refresh: getters.refreshToken
+      });
+      await dispatch("login", {
+        access_token: response.data.access,
+        refresh_token: response.data.refresh
+      });
+
+      return Promise.resolve(response);
+    } catch (error) {
+      return Promise.reject(error);
+    }
   }
 };
 

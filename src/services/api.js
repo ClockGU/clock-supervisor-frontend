@@ -1,4 +1,5 @@
 import axios from "axios";
+import store from "@/store";
 
 export const log = (message, args) => {
   if (import.meta.env.NODE_ENV === "production") return;
@@ -74,26 +75,24 @@ const ApiService = {
           (error.response.status === 401 && isArrayBuffer)
         ) {
           return store
-            .dispatch("auth/REFRESH_TOKEN")
+            .dispatch("refreshTokens")
             .then((response) => {
-              const { access: accessToken } = response.data;
               const { config: originalRequest } = error;
-
-              // Set new access token
-              originalRequest.headers["Authorization"] =
-                `Bearer ${accessToken}`;
 
               // Retry the request
               log("retrying request");
-              return this.customRequest({
-                ...originalRequest,
-                headers: isArrayBuffer
-                  ? {}
-                  : {
-                      "Content-Type": "application/json;charset=UTF-8"
-                    },
-                responseType: isArrayBuffer ? "arraybuffer" : undefined
-              }).catch((error) => {
+              return axios(
+                {
+                  ...originalRequest,
+                  headers: isArrayBuffer
+                    ? {}
+                    : {
+                        "Content-Type": "application/json;charset=UTF-8"
+                      },
+                  responseType: isArrayBuffer ? "arraybuffer" : undefined
+                },
+                {}
+              ).catch((error) => {
                 // If the retried request fails, reject the Promise
                 return Promise.reject(error);
               });
