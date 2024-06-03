@@ -7,7 +7,7 @@ import lightImg from "@/assets/clock.svg";
 
 const props = defineProps({
   size: {
-    type: Number,
+    type: String,
     required: true
   }
 });
