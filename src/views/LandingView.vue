@@ -1,12 +1,21 @@
 <template>
-  <v-row align="center" style="height: 100%">
-    <v-col class="d-flex" cols="6" style="justify-content: end">
+  <v-row v-if="!mdAndUp" align="center">
+    <v-col class="d-flex" cols="12" style="justify-content: center">
+      <ClockIcon size="400"></ClockIcon>
+    </v-col>
+  </v-row>
+  <v-row align="center" :style="styles">
+    <v-col v-if="mdAndUp" class="d-flex" cols="6" style="justify-content: end">
       <ClockIcon size="600"></ClockIcon>
     </v-col>
-    <v-col cols="6">
-      <v-card width="600">
+    <v-col
+      :class="!mdAndUp ? 'd-flex' : ''"
+      :cols="mdAndUp ? 6 : 12"
+      :style="!mdAndUp ? { 'justify-content': 'center' } : {}"
+    >
+      <v-card max-width="600">
         <v-card-text style="text-align: center">
-          <h2>Willkommen im Vorgesetztenportal von CLOCK</h2>
+          <h2>Willkommen im Vorgesetz&shy;ten&shy;portal von CLOCK</h2>
         </v-card-text>
         <v-card-actions>
           <v-spacer />
@@ -34,9 +43,11 @@ import ClockIcon from "@/components/logo/ClockIcon.vue";
 import { useStore } from "vuex";
 import ApiService from "@/services/api";
 import { computed, ref } from "vue";
+import { useDisplay } from "vuetify";
 const store = useStore();
 const error = ref("");
 
+const { mdAndUp } = useDisplay();
 const hasError = computed(() => error.value !== "");
 async function login() {
   await store.dispatch("setIsLoading");
@@ -55,6 +66,8 @@ async function login() {
     setTimeout(() => (error.value = ""), 5000);
   }
 }
+console.log(mdAndUp);
+const styles = computed(() => (mdAndUp.value ? { height: "100%" } : {}));
 </script>
 
 <style scoped lang="scss">
