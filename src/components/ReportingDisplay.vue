@@ -4,6 +4,7 @@ import {mdiCircle, mdiClose, mdiInformationOutline} from "@mdi/js";
 import {parseHHmmToMinutes} from "@/parsers/time";
 import ApiService from "@/services/api";
 import { useStore} from "vuex";
+import ViolationComponent from "@/components/ViolationComponent.vue";
 
 const props = defineProps({
   date: Date
@@ -176,7 +177,11 @@ async function getReports(dateValue) {
                   <td>{{ obj.breaktime }}</td>
                   <td>{{ obj.worktime }}</td>
                   <td>{{ obj.absence_type }}</td>
-                  <td>{{ obj.notes }}</td>
+                  <td>
+                    <span v-if="obj.notes !==''">
+                      <ViolationComponent :violations="obj.notes"></ViolationComponent>
+                    </span>
+                    </td>
                 </tr>
                 </tbody>
               </v-table>
