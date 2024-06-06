@@ -10,6 +10,8 @@ const newReference = ref("");
 const loadingAdd = ref(false);
 const loadingRemove = ref(false);
 const icons = reactive({ closeIcon: mdiClose });
+
+const emit = defineEmits(["refetchReports"]);
 async function addReference() {
   let data = {};
   loadingAdd.value = true;
@@ -18,6 +20,7 @@ async function addReference() {
     await store.dispatch("addSupervisedReference", newReference.value);
     data[REFERENCE_FIELD_NAME] = managedReferences.value;
     const response = await ApiService.patch("/auth/users/me/", data);
+    emit("refetchReports");
   } catch (e) {
     await store.dispatch("popSupervisedReference", newReference.value);
     await store.dispatch(
@@ -37,6 +40,7 @@ async function removeReference(reference) {
     await store.dispatch("popSupervisedReference", reference);
     data[REFERENCE_FIELD_NAME] = managedReferences.value;
     const response = await ApiService.patch("/auth/users/me/", data);
+    emit("refetchReports");
   } catch (e) {
     await store.dispatch("addSupervisedReference", reference);
     await store.dispatch(

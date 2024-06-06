@@ -9,6 +9,7 @@ import { ref } from "vue";
 const store = useStore();
 
 const viewDate = ref(new Date());
+const refetechReports = ref(false);
 viewDate.value.setDate(1);
 </script>
 
@@ -23,12 +24,17 @@ viewDate.value.setDate(1);
           </v-row>
           <v-row>
             <v-col>
-              <ReportManagement></ReportManagement>
+              <ReportManagement
+                @refetch-reports="refetechReports = true"
+              ></ReportManagement>
             </v-col>
           </v-row>
           <v-row>
             <v-col>
-              <ReportingDisplay :date="viewDate"></ReportingDisplay>
+              <ReportingDisplay
+                v-model="refetechReports"
+                :date="viewDate"
+              ></ReportingDisplay>
             </v-col>
           </v-row>
         </v-container>
