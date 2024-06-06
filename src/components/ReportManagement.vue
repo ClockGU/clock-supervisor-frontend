@@ -94,6 +94,7 @@ function setElementBlur() {
           v-model="newReference"
           class="mr-3"
           label="Neues Objekt zuordnen"
+          @keydown.enter="addReference"
         >
           <template #append-innner>
             <v-progress-circular
