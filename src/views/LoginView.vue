@@ -1,6 +1,6 @@
 <template>
   <v-row align="center" justify="center" style="height: 100%">
-    <v-col class="d-flex" cols="6">
+    <v-col class="d-flex justify-center" cols="12">
       <v-card>
         <v-card-title> Authentifizierung als Führungskraft </v-card-title>
         <v-card-text>
