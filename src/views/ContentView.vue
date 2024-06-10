@@ -14,33 +14,29 @@ viewDate.value.setDate(1);
 </script>
 
 <template>
-  <v-row justify="center" style="height: 100%">
-    <v-col class="d-flex" cols="12">
-      <v-sheet style="width: 100%; height: 100%">
-        <AdminToolbar></AdminToolbar>
-        <v-container>
-          <v-row justify="center">
-            <MonthSwitcher v-model="viewDate"></MonthSwitcher>
-          </v-row>
-          <v-row>
-            <v-col>
-              <ReportManagement
-                @refetch-reports="refetechReports = true"
-              ></ReportManagement>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <ReportingDisplay
-                v-model="refetechReports"
-                :date="viewDate"
-              ></ReportingDisplay>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-sheet>
-    </v-col>
-  </v-row>
+  <v-sheet style="width: 100%; height: 100%">
+    <AdminToolbar></AdminToolbar>
+    <v-container style="max-width: 1400px">
+      <v-row justify="center">
+        <MonthSwitcher v-model="viewDate"></MonthSwitcher>
+      </v-row>
+      <v-row>
+        <v-col>
+          <ReportManagement
+            @refetch-reports="refetechReports = true"
+          ></ReportManagement>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <ReportingDisplay
+            v-model="refetechReports"
+            :date="viewDate"
+          ></ReportingDisplay>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-sheet>
 </template>
 
 <style scoped lang="sass"></style>
