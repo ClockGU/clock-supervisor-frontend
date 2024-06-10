@@ -51,6 +51,24 @@ async function removeReference(reference) {
   loadingRemove.value = false;
 }
 
+async function checkValidity() {
+  let response;
+  try {
+    response = await ApiService.post(
+      "/supervisor/references/validate",
+      managedReferences.value
+    );
+  } catch (e) {
+    await store.dispatch(
+      "addError",
+      "Ein Fehler beim Überprüfen der Validität der Referenzen ist aufgetreten."
+    );
+    return;
+  }
+  console.log(response.data);
+  await store.dispatch("setSupervisedReferences", response.data);
+}
+
 // Workaround for Textfield. The "active" state upon clicking looks weird if it is not reset
 function setElementBlur() {
   setTimeout(() => document.activeElement.blur(), 200);
@@ -61,34 +79,42 @@ function setElementBlur() {
   <v-card style="width: 100%">
     <v-card-text>
       <p class="mb-4">Für folgende Verträge zuständig:</p>
-      <v-text-field
-        :autofocus="false"
-        class="normal-cursor"
-        style="caret-color: transparent"
-        @click.prevent="setElementBlur"
-      >
-        <template #append-inner>
-          <v-progress-circular
-            v-if="loadingRemove"
-            color="primary"
-            indeterminate
-          >
-          </v-progress-circular>
-        </template>
-        <v-chip
-          v-for="reference in managedReferences"
-          :key="reference"
-          closable
+      <div class="d-flex align-center">
+        <v-text-field
+          :autofocus="false"
+          class="normal-cursor"
+          style="caret-color: transparent"
+          @click.prevent="setElementBlur"
         >
-          {{ reference }}
-          <template #close>
-            <v-icon
-              :icon="icons.closeIcon"
-              @click.prevent="removeReference(reference)"
-            />
+          <template #append-inner>
+            <v-progress-circular
+              v-if="loadingRemove"
+              color="primary"
+              indeterminate
+            >
+            </v-progress-circular>
           </template>
-        </v-chip>
-      </v-text-field>
+          <v-chip
+            v-for="reference in managedReferences"
+            :key="reference"
+            closable
+          >
+            {{ reference }}
+            <template #close>
+              <v-icon
+                :icon="icons.closeIcon"
+                @click.prevent="removeReference(reference)"
+              />
+            </template>
+          </v-chip>
+        </v-text-field>
+        <v-btn
+          class="ml-3"
+          style="transform: translate(0px, -12px)"
+          @click="checkValidity"
+          >Gültigkeit Prüfen</v-btn
+        >
+      </div>
       <div class="d-flex align-center">
         <v-text-field
           v-model="newReference"

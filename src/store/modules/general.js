@@ -36,6 +36,10 @@ const mutations = {
   addSupervisedReference(state, value) {
     state.user.supervised_references.push(value);
   },
+  setSupervisedReferences(state, value) {
+    state.user.supervised_references.splice(0);
+    state.user.supervised_references.push(...value);
+  },
   addError: (state, value) => state.globalErrors.push(value),
   removeError: (state, value) => state.globalErrors.pop(value),
   clearGlobalErrors: (state, value) => (state.globalErrors = [])
@@ -65,6 +69,9 @@ const actions = {
   },
   addSupervisedReference({ commit }, value) {
     commit("addSupervisedReference", value);
+  },
+  setSupervisedReferences({ commit }, value) {
+    commit("setSupervisedReferences", value);
   },
   async refreshTokens({ commit, dispatch, getters }) {
     try {
