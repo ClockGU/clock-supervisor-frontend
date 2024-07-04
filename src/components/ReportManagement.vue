@@ -78,7 +78,7 @@ function setElementBlur() {
 <template>
   <v-card style="width: 100%">
     <v-card-text>
-      <p class="mb-4">Für folgende Verträge zuständig:</p>
+      <p class="mb-4">Hilfskraft-Verträge verwalten:</p>
       <div class="d-flex align-center">
         <v-text-field
           v-model="newReference"
