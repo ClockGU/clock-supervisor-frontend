@@ -83,7 +83,7 @@ function setElementBlur() {
         <v-text-field
           v-model="newReference"
           class="mr-3"
-          label="Neues Objekt zuordnen"
+          label="Neuen Hilfskraft-Vertrag zuordnen"
           @keydown.enter="addReference"
         >
           <template #append-innner>
