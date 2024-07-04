@@ -81,42 +81,6 @@ function setElementBlur() {
       <p class="mb-4">Für folgende Verträge zuständig:</p>
       <div class="d-flex align-center">
         <v-text-field
-          :autofocus="false"
-          class="normal-cursor"
-          style="caret-color: transparent"
-          @click.prevent="setElementBlur"
-        >
-          <template #append-inner>
-            <v-progress-circular
-              v-if="loadingRemove"
-              color="primary"
-              indeterminate
-            >
-            </v-progress-circular>
-          </template>
-          <v-chip
-            v-for="reference in managedReferences"
-            :key="reference"
-            closable
-          >
-            {{ reference }}
-            <template #close>
-              <v-icon
-                :icon="icons.closeIcon"
-                @click.prevent="removeReference(reference)"
-              />
-            </template>
-          </v-chip>
-        </v-text-field>
-        <v-btn
-          class="ml-3"
-          style="transform: translate(0px, -12px)"
-          @click="checkValidity"
-          >Gültigkeit Prüfen</v-btn
-        >
-      </div>
-      <div class="d-flex align-center">
-        <v-text-field
           v-model="newReference"
           class="mr-3"
           label="Neues Objekt zuordnen"
@@ -139,6 +103,53 @@ function setElementBlur() {
           >Hinzufügen</v-btn
         >
       </div>
+      <v-expansion-panels
+        ><v-expansion-panel>
+          <v-expansion-panel-title>
+            {{
+              managedReferences.length + " Hilfskraft-Verträge zugeordnet"
+            }}</v-expansion-panel-title
+          >
+          <v-expansion-panel-text>
+            <div class="d-flex align-center">
+              <v-text-field
+                :autofocus="false"
+                class="normal-cursor"
+                style="caret-color: transparent"
+                @click.prevent="setElementBlur"
+              >
+                <template #append-inner>
+                  <v-progress-circular
+                    v-if="loadingRemove"
+                    color="primary"
+                    indeterminate
+                  >
+                  </v-progress-circular>
+                </template>
+                <v-chip
+                  v-for="reference in managedReferences"
+                  :key="reference"
+                  closable
+                >
+                  {{ reference }}
+                  <template #close>
+                    <v-icon
+                      :icon="icons.closeIcon"
+                      @click.prevent="removeReference(reference)"
+                    />
+                  </template>
+                </v-chip>
+              </v-text-field>
+              <v-btn
+                class="ml-3"
+                style="transform: translate(0px, -12px)"
+                @click="checkValidity"
+                >Gültigkeit Prüfen</v-btn
+              >
+            </div>
+          </v-expansion-panel-text>
+        </v-expansion-panel>
+      </v-expansion-panels>
     </v-card-text>
   </v-card>
 </template>
