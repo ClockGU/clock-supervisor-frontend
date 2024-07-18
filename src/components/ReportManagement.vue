@@ -1,15 +1,17 @@
 <script setup>
 import { useStore } from "vuex";
 import { ref, reactive } from "vue";
-import { mdiClose } from "@mdi/js";
+import { mdiClose, mdiCommentQuestion } from "@mdi/js";
 import { REFERENCE_FIELD_NAME } from "@/main";
 import ApiService from "@/services/api";
+import HelpDialog from "@/components/HelpDialog.vue";
 const store = useStore();
 const managedReferences = ref(store.getters.user.supervised_references);
 const newReference = ref("");
 const loadingAdd = ref(false);
 const loadingRemove = ref(false);
 const icons = reactive({ closeIcon: mdiClose });
+const dialog = ref(false);
 
 const emit = defineEmits(["refetchReports"]);
 async function addReference() {
@@ -78,7 +80,10 @@ function setElementBlur() {
 <template>
   <v-card style="width: 100%">
     <v-card-text>
-      <p class="mb-4">Hilfskraft-Verträge verwalten:</p>
+      <div class="d-flex mb-3" style="width: 100%">
+        <span class="icon-center">Hilfskraft-Verträge verwalten:</span>
+        <HelpDialog></HelpDialog>
+      </div>
       <div class="d-flex align-center">
         <v-text-field
           v-model="newReference"
@@ -170,4 +175,8 @@ function setElementBlur() {
 .v-chip :deep(.v-icon)
   height: $chip-font-size
   width: $chip-font-size
+
+.icon-center
+  display: inline-flex
+  align-items: center
 </style>
