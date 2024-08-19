@@ -145,6 +145,14 @@ async function getReports(dateValue) {
   </v-row>
   <v-row>
     <v-expansion-panels>
+      <v-expansion-panel v-if="reports.length === 0" disabled>
+        <v-expansion-panel-title>
+          Keine Stundenzettel zur Einsicht verfügbar</v-expansion-panel-title
+        >
+        <v-expansion-panel-text>
+          Keine Stundenzettel zur Einsicht verfügbar
+        </v-expansion-panel-text>
+      </v-expansion-panel>
       <v-expansion-panel v-for="report in reports" :key="report._id">
         <v-expansion-panel-title>
           <v-row justify="center" no-gutters>
