@@ -226,6 +226,7 @@ async function getReports(dateValue) {
                     <td>
                       <span v-if="obj.notes !== ''">
                         <ViolationComponent
+                          :key="day + report.id"
                           :violations="obj.notes"
                         ></ViolationComponent>
                       </span>
