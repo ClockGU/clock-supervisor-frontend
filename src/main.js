@@ -5,16 +5,23 @@
  */
 
 // Plugins
-import { registerPlugins } from '@/plugins'
-
+import { registerPlugins } from "@/plugins";
+import ApiService from "@/services/api";
+import { de } from "date-fns/locale";
+setDefaultOptions({ locale: de });
 // Components
-import App from './App.vue'
+import App from "./App.vue";
 
 // Composables
-import { createApp } from 'vue'
+import { createApp } from "vue";
+import { setDefaultOptions } from "date-fns";
 
-const app = createApp(App)
+export const REFERENCE_FIELD_NAME = "supervised_references";
 
-registerPlugins(app)
+ApiService.init(import.meta.env.VITE_API_URL);
+ApiService.mountInterceptor();
+const app = createApp(App);
 
-app.mount('#app')
+registerPlugins(app);
+
+app.mount("#app");
