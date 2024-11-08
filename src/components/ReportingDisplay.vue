@@ -177,7 +177,7 @@ async function getReports(dateValue) {
         </v-expansion-panel-title>
         <v-expansion-panel-text>
           <v-row>
-            <v-col> Sollarbeitsziet: {{ report.general.debit_worktime }}</v-col>
+            <v-col> Sollarbeitszeit: {{ report.general.debit_worktime }}</v-col>
             <v-col> Nettoarbeitszeit: {{ report.general.net_worktime }}</v-col>
             <v-col>
               Übertrag aus Vormonat:
@@ -193,7 +193,7 @@ async function getReports(dateValue) {
                     <th>Datum</th>
                     <th>Start</th>
                     <th>Ende</th>
-                    <th>Puse</th>
+                    <th>Pause</th>
                     <th>Arbeitszeit</th>
 
                     <th>
