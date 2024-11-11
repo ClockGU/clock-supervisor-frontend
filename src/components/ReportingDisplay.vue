@@ -119,23 +119,23 @@ async function getReports(dateValue) {
               </div>
             </div>
 
-            <p style="margin-bottom: 8px; margin-top: 8px">Verstöße</p>
+            <p style="margin-bottom: 8px; margin-top: 8px">Warnungen</p>
             <div>
               <div class="icon-center">
                 <v-icon color="success">{{ mdiCircle }}</v-icon>
-                <span> Keine Verstöße </span>
+                <span> Keine Warnungen </span>
               </div>
             </div>
             <div>
               <div class="icon-center">
                 <v-icon color="warning">{{ mdiCircle }}</v-icon>
-                <span> Weniger als 6 Verstöße </span>
+                <span> Weniger als 6 Warnungen </span>
               </div>
             </div>
             <div>
               <div class="icon-center">
                 <v-icon color="error">{{ mdiCircle }}</v-icon>
-                <span> Mehr als 6 Verstöße </span>
+                <span> Mehr als 6 Warnungen </span>
               </div>
             </div>
           </v-card-text>
@@ -169,7 +169,7 @@ async function getReports(dateValue) {
             </v-col>
             <v-col cols="3">
               <div class="d-inline-flex" style="align-items: center">
-                <p>Verstöße:</p>
+                <p>Warnungen:</p>
                 <v-icon :color="getNotesColor(report)">{{ mdiCircle }}</v-icon>
               </div>
             </v-col>
