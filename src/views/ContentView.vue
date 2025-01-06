@@ -5,6 +5,7 @@ import MonthSwitcher from "@/components/MonthSwitcher.vue";
 import ReportManagement from "@/components/ReportManagement.vue";
 import ReportingDisplay from "@/components/ReportingDisplay.vue";
 import { ref } from "vue";
+import AppFooter from "@/components/AppFooter.vue";
 
 const store = useStore();
 
@@ -14,9 +15,9 @@ viewDate.value.setDate(1);
 </script>
 
 <template>
-  <v-sheet style="width: 100%; height: 100%">
+  <v-sheet style="width: 100%; height: 100vh; ">
     <AdminToolbar></AdminToolbar>
-    <v-container style="max-width: 1400px">
+    <v-container style="max-width: 1400px;">
       <v-row justify="center">
         <MonthSwitcher v-model="viewDate"></MonthSwitcher>
       </v-row>
@@ -35,8 +36,12 @@ viewDate.value.setDate(1);
           ></ReportingDisplay>
         </v-col>
       </v-row>
+
     </v-container>
+   
+
   </v-sheet>
 </template>
 
 <style scoped lang="sass"></style>
+
