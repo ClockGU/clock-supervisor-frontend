@@ -1,6 +1,6 @@
 <script setup>
 import { useStore } from "vuex";
-import { ref, reactive } from "vue";
+import { ref, reactive, watch } from "vue";
 import { mdiClose,  } from "@mdi/js";
 import { REFERENCE_FIELD_NAME } from "@/main";
 import ApiService from "@/services/api";
@@ -14,20 +14,34 @@ const loadingRemove = ref(false);
 const icons = reactive({ closeIcon: mdiClose });
 const dialog = ref(false);
 const UUIDv4_REGEX = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/;
+const uuidError = ref("");
 
 const emit = defineEmits(["refetchReports"]);
 
+watch(newReference, () => {
+  clearError();
+  } );
 function isValidUUIDv4(uuid) {
   return UUIDv4_REGEX.test(uuid) && uuid.length === 36;
 }
+function clearError() {
+  uuidError.value = "";
+}
+
+function showError(message) {
+  uuidError.value = message;
+  setTimeout(clearError, 5000);
+}
 async function addReference() {
   if (!isValidUUIDv4(newReference.value)) {
-    await store.dispatch(
-      "addError",
-      "Ungültige Referenz-ID: Bitte verwenden Sie ein gültiges UUIDv4-Format."
-    );
+    showError("Ungültige Referenz-ID: Bitte verwenden Sie ein gültiges UUIDv4-Format.");
     return;
   }
+  if(managedReferences.value.includes(newReference.value)) {
+    showError("Diese Referenz existiert bereits.");
+    return;
+  }
+
   let data = {};
   loadingAdd.value = true;
   setElementBlur();
@@ -118,9 +132,14 @@ function setElementBlur() {
           class="ml-3"
           style="transform: translate(0px, -12px)"
           @click="addReference"
+          >{{ $t("add") }}</v-btn
         >
-          {{ $t("add") }}
-        </v-btn>
+      </div>
+      <!-- Error Message -->
+      <div v-if="uuidError" class="error-message mb-4">
+        <v-alert type="error" dense outlined>
+          {{ uuidError }}
+        </v-alert>
       </div>
       <v-expansion-panels>
         <v-expansion-panel>
@@ -192,3 +211,6 @@ function setElementBlur() {
   display: inline-flex
   align-items: center
 </style>
+
+
+
