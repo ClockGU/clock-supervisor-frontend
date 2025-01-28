@@ -15,7 +15,7 @@
 
           <div v-for="content in [0, 1, 2]" :key="content">
             <div v-if="content === 0" class="my-2">
-              &copy;{{ new Date().getFullYear() }} 
+              &copy; {{ new Date().getFullYear() }} 
               <a
                 href="https://uni-frankfurt.de/clock"
                 rel="noopener noreferrer"
@@ -25,7 +25,7 @@
               </a>
             </div>
             <div v-else-if="content === 1" class="my-2 pb-10">
-              <p class="mb-2">
+              <p class="mb-4">
                 Dieses Projekt wurde mit finanzieller Unterstützung der
                 <a
                   class="text-no-wrap"
