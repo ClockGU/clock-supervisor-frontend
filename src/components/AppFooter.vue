@@ -113,13 +113,15 @@ const items = [
   
 ]
 const route = useRoute()
-const showFooter = computed(() => route.path === "/main")
+const showFooter = computed(() => route.path !== "/" && route.path !== "/login")
 </script>
 
 <style scoped>
   a {
     text-decoration: none;
-    color: #B5007F;
+    color: #EA80FC
+
+    ;
   }
 </style>
 
