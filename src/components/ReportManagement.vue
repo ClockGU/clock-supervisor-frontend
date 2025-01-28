@@ -1,10 +1,11 @@
 <script setup>
 import { useStore } from "vuex";
 import { ref, reactive } from "vue";
-import { mdiClose, mdiCommentQuestion } from "@mdi/js";
+import { mdiClose,  } from "@mdi/js";
 import { REFERENCE_FIELD_NAME } from "@/main";
 import ApiService from "@/services/api";
 import HelpDialog from "@/components/HelpDialog.vue";
+
 const store = useStore();
 const managedReferences = ref(store.getters.user.supervised_references);
 const newReference = ref("");
@@ -12,9 +13,20 @@ const loadingAdd = ref(false);
 const loadingRemove = ref(false);
 const icons = reactive({ closeIcon: mdiClose });
 const dialog = ref(false);
+const UUIDv4_REGEX = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/;
 
 const emit = defineEmits(["refetchReports"]);
+function isValidUUIDv4(uuid) {  
+  return UUIDv4_REGEX.test(uuid) && uuid.length === 36;  
+}  
 async function addReference() {
+  if (!isValidUUIDv4(newReference.value)) {  
+    await store.dispatch(  
+      "addError",  
+      "Ungültige Referenz-ID: Bitte verwenden Sie ein gültiges UUIDv4-Format."  
+    );  
+    return;  
+  }  
   let data = {};
   loadingAdd.value = true;
   setElementBlur();
@@ -180,3 +192,4 @@ function setElementBlur() {
   display: inline-flex
   align-items: center
 </style>
+
