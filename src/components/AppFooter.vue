@@ -2,7 +2,7 @@
   <v-footer v-if="showFooter" color="primary-darken-2" style="padding: 0; margin: 0; min-height: 72px;">
     <v-row justify="center" no-gutters>
         <v-col class="text-center d-flex align-center justify-center flex-column">
-          <div class="d-flex align-center justify-center ga-6 my-2">
+          <div class="d-flex align-center justify-center  my-2">
             <a
               v-for="link in links"
               :key="link.text"
