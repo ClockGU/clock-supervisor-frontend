@@ -62,6 +62,15 @@
         this.$vuetify.locale.current = locale;
   
         await ApiService.setHeader("Accept-Language", locale);
+          try {
+          await ApiService.patch("/auth/users/me/", {
+            language: locale
+          });
+        } catch (error) {
+          console.error(error);
+        } finally {
+          await this.$store.dispatch("changeLocale", locale);
+        }
 
       }
     }
