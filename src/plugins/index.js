@@ -8,7 +8,9 @@
 import vuetify from "./vuetify";
 import router from "@/router";
 import store from "@/store";
+import i18n from "@/plugins/i18n"; 
+
 
 export function registerPlugins(app) {
-  app.use(vuetify).use(router).use(store);
+  app.use(vuetify).use(router).use(store).use(i18n);
 }
