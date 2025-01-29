@@ -7,13 +7,11 @@
 // Plugins
 import { registerPlugins } from "@/plugins";
 import ApiService from "@/services/api";
-//setDefaultOptions({ locale: de });
 // Components
 import App from "./App.vue";
 
 // Composables
 import { createApp } from "vue";
-//import { setDefaultOptions } from "date-fns";
 
 export const REFERENCE_FIELD_NAME = "supervised_references";
 

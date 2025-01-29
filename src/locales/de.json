@@ -1,6 +1,69 @@
 {
-    "title": "Uhr",
-    "description": "Uhr",
-    "language": "Deutsch",
-    "date": "Datum"
+   "date": "Datum",
+   "start": "Start",
+   "end": "Ende",
+   "break": "Pause",
+   "worktime": "Arbeitszeit",
+   "notes": "Notizen",
+   "add": "Hinzufügen",
+   "help": "Hilfe",
+
+
+   "reporting": {
+      "legend": "Legende",
+      "colorCoding": "Farbkodierung",
+      "netWorktime": "Nettoarbeitszeit",
+      "noUnderhours": "Keine Unterstunden",
+      "hasUnderhours": "Hat Unterstunden",
+      "lessThan20Percent": "Weniger als 20% Sollarbeitszeit",
+      "violations": "Verstöße",
+      "noViolations": "Keine Verstöße",
+      "lessThan6Violations": "Weniger als 6 Verstöße",
+      "moreThan6Violations": "Mehr als 6 Verstöße",
+      "noTimesheetsAvailable": "Keine Stundenzettel zur Einsicht verfügbar",
+      "debitWorktime": "Sollarbeitsziet",
+      "lastMonthCarryOver": "Übertrag aus Vormonat",
+      "nextMonthCarryOver": "Übertrag",
+      "absence": "F/K/U",
+      "absenceTypes": "F: Feiertag, K: Krank, U: Urlaub"
+   },
+
+
+   "references": {
+      "errors":{
+         "addReferenceError": "Ein Fehler beim hinzufügen eines Objekts ist aufgetreten.",
+         "removeReferenceError": "Ein Fehler beim entfernen eines Objekts ist aufgetreten.",
+         "checkValidityError": "Ein Fehler beim Überprüfen der Validität der Referenzen ist aufgetreten."
+      },
+      "newReferenceLabel": "Neuen Hilfskraft-Vertrag zuordnen",
+      "managedReferences": "Hilfskraft-Verträge zugeordnet",
+      "checkValidityButton": "Gültigkeit Prüfen"
+   },
+
+
+   "violations": {
+      "over10": "Arbeitszeit über 10 Stunden",
+      "notEnoughBreak": "Pausenzeit nicht ausreichend",
+      "notEnoughRest": "Ruhezeit unter 11 Stunden",
+      "after20": "Arbeit nach 20 Uhr",
+      "before8": "Arbeit vor 8 Uhr",
+      "onSunday": "Arbeit an einem Sonntag",
+      "onHoliday": "Arbeit an einem Feiertag"
+   },
+
+
+   "help-tooltip": {
+        "title": "Was passiert hier?",
+        "question1": "Was muss in diesem Bereich getan werden?",
+        "answer1": "In diesem Bereich tragen sie die Vertragsreferenze der Ihnen untergeordneten Hilfskräfte ein.",
+        "question2": "Was bedeuten diese kryptischen Zeichenketten?",
+        "answer2": "Die Zeichenketten sind Referenzen zu den Verträgen Ihrer Hilfskräfte in Clock.",
+        "question3": "Woher kommen diese Zeichenketten?",
+        "answer3": "Erstellt eine Hilfskraft einen Vertrag in Clock so wird eine Zeichenkette erstellt. Diese Muss die Hilfskraft Ihnen zukommen lassen und Sie müssen sie sich hier zuordnen.",
+        "question4": " Was ist wenn ich mir nicht sicher bin ob eine Zeichenkette valide ist?",
+        "answer4": "Falls sich im Laufe der Zeit viele dieser Referenzen ansammeln, können Sie mit dem Button 'Gültigkeit Prüfen' überprüfen, ob diese Referenzen noch gültig sind."
+   },
+   "errors": {
+      "error Occured": "Ein Fehler ist aufgetreten"
+   }
 }

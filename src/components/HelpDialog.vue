@@ -12,13 +12,13 @@ const dialog = ref(false);
   >
     <template #activator="{ props }">
       <button v-bind="props" style="margin-left: auto; line-height: 21px">
-        <span>Hilfe</span>
+        <span>{{ $t("help") }}</span>
         <v-icon class="ml-2" color="grey">{{ mdiCommentQuestion }} </v-icon>
       </button>
     </template>
     <v-card width="600">
       <v-toolbar color="white">
-        <v-card-title style="width: auto"> Was passiert hier? </v-card-title>
+        <v-card-title style="width: auto">{{ $t("help-tooltip.title") }}</v-card-title>
         <v-spacer />
         <v-btn
           variant="plain"
@@ -27,30 +27,14 @@ const dialog = ref(false);
         ></v-btn>
       </v-toolbar>
       <v-card-text style="padding: 0 24px 16px">
-        <h3>Was muss in diesem Bereich getan werden?</h3>
-        <p>
-          In diesem Bereich tragen sie die Vertragsreferenzen der Ihnen
-          untergeordneten Hilfskräfte ein.
-        </p>
-        <h3>Was bedeuten diese kryptischen Zeichenketten?</h3>
-        <p>
-          Die Zeichenketten sind Referenzen zu den Verträgen Ihrer Hilfskräfte
-          in Clock.
-        </p>
-        <h3>Woher kommen diese Zeichenketten?</h3>
-        <p>
-          Erstellt eine Hilfskraft einen Vertrag in Clock so wird eine
-          Zeichenkette erstellt. Diese Muss die Hilfskraft Ihnen zukommen lassen
-          und Sie müssen sie sich hier zuordnen.
-        </p>
-        <h3>
-          Was ist wenn ich mir nicht sicher bin ob eine Zeichenkette valide ist?
-        </h3>
-        <p>
-          Sollten sich mit der Zeit viele dieser Referenzen ansammeln, können
-          Sie mittels des Buttons "Gültigkeit Prüfen" überprüfen, ob diese
-          Referenzen noch gültig sind.
-        </p>
+        <h3>{{ $t("help-tooltip.question1") }}</h3>
+        <p>{{ $t("help-tooltip.answer1") }}</p>
+        <h3>{{ $t("help-tooltip.question2") }}</h3>
+        <p>{{ $t("help-tooltip.answer2") }}</p>
+        <h3>{{ $t("help-tooltip.question3") }}</h3>
+        <p>{{ $t("help-tooltip.answer3") }}</p>
+        <h3>{{ $t("help-tooltip.question4") }}</h3>
+        <p>{{ $t("help-tooltip.answer4") }}</p>
       </v-card-text>
     </v-card>
   </v-dialog>
@@ -69,3 +53,4 @@ p {
   text-indent: 8px;
 }
 </style>
+
