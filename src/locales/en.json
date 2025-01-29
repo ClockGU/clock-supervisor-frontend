@@ -7,7 +7,10 @@
     "notes": "Notes",
     "add": "Add",
     "help": "Help",
-    
+    "landing": {
+      "welcome": "Welcome to the Supervisor Portal of CLOCK",
+      "login": "To Login"
+    },
     "reporting": {
         "legend": "Legend",
         "colorCoding": "Color Coding",
@@ -26,7 +29,6 @@
         "absence": "H/S/V",
         "absenceTypes": "H: Holiday, S: Sick, V: Vacation"
     },
-    
     "references": {
         "errors": {
             "addReferenceError": "An error occurred while adding an object.",
@@ -37,7 +39,6 @@
         "managedReferences": "Assigned Assistant Contracts",
         "checkValidityButton": "Check Validity"
     },
-    
     "violations": {
         "over10": "Worktime over 10 hours",
         "notEnoughBreak": "Insufficient Breaktime",
@@ -47,7 +48,6 @@
         "onSunday": "Work on a Sunday",
         "onHoliday": "Work on a Holiday"
     },
-    
     "help-tooltip": {
         "title": "What is happening here?",
         "question1": "What needs to be done in this area?",

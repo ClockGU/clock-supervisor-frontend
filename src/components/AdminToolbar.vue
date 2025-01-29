@@ -5,6 +5,7 @@
       {{ store.getters.user.last_name }}
     </v-toolbar-title>
     <v-spacer />
+    <LanguageSwitcher/>
     <v-btn @click="logout"> Logout</v-btn>
   </v-toolbar>
 </template>
@@ -13,6 +14,7 @@
 import { useStore } from "vuex";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import LanguageSwitcher from "./LanguageSwitcher.vue";
 
 const store = useStore();
 const router = useRouter();

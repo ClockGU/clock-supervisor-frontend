@@ -7,8 +7,10 @@
    "notes": "Notizen",
    "add": "Hinzufügen",
    "help": "Hilfe",
-
-
+   "landing": {
+      "welcome": "Willkommen im Vorgesetztenportal von CLOCK",
+      "login": "Zum Login"
+   } ,
    "reporting": {
       "legend": "Legende",
       "colorCoding": "Farbkodierung",
@@ -27,8 +29,6 @@
       "absence": "F/K/U",
       "absenceTypes": "F: Feiertag, K: Krank, U: Urlaub"
    },
-
-
    "references": {
       "errors":{
          "addReferenceError": "Ein Fehler beim hinzufügen eines Objekts ist aufgetreten.",
@@ -39,8 +39,6 @@
       "managedReferences": "Hilfskraft-Verträge zugeordnet",
       "checkValidityButton": "Gültigkeit Prüfen"
    },
-
-
    "violations": {
       "over10": "Arbeitszeit über 10 Stunden",
       "notEnoughBreak": "Pausenzeit nicht ausreichend",
@@ -50,8 +48,6 @@
       "onSunday": "Arbeit an einem Sonntag",
       "onHoliday": "Arbeit an einem Feiertag"
    },
-
-
    "help-tooltip": {
         "title": "Was passiert hier?",
         "question1": "Was muss in diesem Bereich getan werden?",
