@@ -15,7 +15,7 @@
     >
       <v-card max-width="600">
         <v-card-text style="text-align: center">
-          <h2>Willkommen im Vorgesetz&shy;ten&shy;portal von CLOCK</h2>
+          <h2>{{$t("landing.welcome") }}</h2>
         </v-card-text>
         <v-card-actions>
           <v-spacer />
@@ -26,7 +26,7 @@
           >
             <template #activator="{ props }">
               <v-btn v-bind="props" variant="elevated" @click="login">
-                Zum Login
+                {{$t("landing.login") }}
               </v-btn>
             </template>
             <span style="color: black"> {{ error }}</span>
@@ -44,10 +44,16 @@ import { useStore } from "vuex";
 import ApiService from "@/services/api";
 import { computed, ref } from "vue";
 import { useDisplay } from "vuetify";
+
+
 const store = useStore();
 const error = ref("");
 
 const { mdAndUp } = useDisplay();
+
+
+const landingText = computed(() => t("landing"));  
+
 const hasError = computed(() => error.value !== "");
 async function login() {
   await store.dispatch("setIsLoading");
