@@ -1,7 +1,65 @@
 {
-    "home": "Startseite",
-    "clock": "Uhr",
-    "settings": "Einstellungen",
-    "language": "Sprache",
-    "theme": "Thema"
+    "date": "Date",
+    "start": "Start",
+    "end": "End",
+    "break": "Break",
+    "worktime": "Worktime",
+    "notes": "Notes",
+    "add": "Add",
+    "help": "Help",
+    
+    "reporting": {
+        "legend": "Legend",
+        "colorCoding": "Color Coding",
+        "netWorktime": "Net Worktime",
+        "noUnderhours": "No Underhours",
+        "hasUnderhours": "Has Underhours",
+        "lessThan20Percent": "Less than 20% of Required Worktime",
+        "violations": "Violations",
+        "noViolations": "No Violations",
+        "lessThan6Violations": "Less than 6 Violations",
+        "moreThan6Violations": "More than 6 Violations",
+        "noTimesheetsAvailable": "No Timesheets Available for View",
+        "debitWorktime": "Required Worktime",
+        "lastMonthCarryOver": "Carry Over from Last Month",
+        "nextMonthCarryOver": "Carry Over",
+        "absence": "H/S/V",
+        "absenceTypes": "H: Holiday, S: Sick, V: Vacation"
+    },
+    
+    "references": {
+        "errors": {
+            "addReferenceError": "An error occurred while adding an object.",
+            "removeReferenceError": "An error occurred while removing an object.",
+            "checkValidityError": "An error occurred while checking the validity of the references."
+        },
+        "newReferenceLabel": "Assign New Assistant Contract",
+        "managedReferences": "Assigned Assistant Contracts",
+        "checkValidityButton": "Check Validity"
+    },
+    
+    "violations": {
+        "over10": "Worktime over 10 hours",
+        "notEnoughBreak": "Insufficient Breaktime",
+        "notEnoughRest": "Rest Time under 11 hours",
+        "after20": "Work after 8 PM",
+        "before8": "Work before 8 AM",
+        "onSunday": "Work on a Sunday",
+        "onHoliday": "Work on a Holiday"
+    },
+    
+    "help-tooltip": {
+        "title": "What is happening here?",
+        "question1": "What needs to be done in this area?",
+        "answer1": "In this area, you enter the contract references of the assistants assigned to you.",
+        "question2": "What do these cryptic strings mean?",
+        "answer2": "The strings are references to your assistants' contracts in Clock.",
+        "question3": "Where do these strings come from?",
+        "answer3": "When an assistant creates a contract in Clock, a string is generated. The assistant must send it to you, and you must assign it here.",
+        "question4": "What if I'm not sure if a string is valid?",
+        "answer4": "If many of these references accumulate over time, you can check if they are still valid with the 'Check Validity' button."
+    },
+    "errors": {
+        "error Occured": "An error occurred"
+    }
 }

@@ -1,6 +1,5 @@
 <script setup>
 import { useStore } from "vuex";
-import { watch } from "vue";
 const store = useStore();
 </script>
 
@@ -21,7 +20,7 @@ const store = useStore();
         <v-col>
           <v-card v-if="store.getters.globalErrors.length !== 0">
             <v-card-title style="color: rgb(var(--v-theme-error))">
-              Ein Fehler ist aufgetreten
+              {{$t('errors.error Occured')}}
             </v-card-title>
             <v-card-text>
               <ul>
@@ -45,3 +44,7 @@ const store = useStore();
 .v-overlay__scrim
   position: absolute
 </style>
+
+
+
+
