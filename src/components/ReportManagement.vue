@@ -12,35 +12,27 @@ const newReference = ref("");
 const loadingAdd = ref(false);
 const loadingRemove = ref(false);
 const icons = reactive({ closeIcon: mdiClose });
-const dialog = ref(false);
 const UUIDv4_REGEX = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/;
-const uuidError = ref("");
 
 const emit = defineEmits(["refetchReports"]);
+const rules = [  
+  () => {  
+    if (!isValidUUIDv4(newReference.value) && newReference.value !== "" ) 
+      return "Ungültige Referenz-ID: Bitte verwenden Sie ein gültiges UUIDv4-Format.";   
 
-watch(newReference, () => {
-  clearError();
-  } );
+    if (managedReferences.value.includes(newReference.value)) {  
+      return "Diese Referenz existiert bereits.";  
+    }    
+    return true;  
+  },  
+];
+
 function isValidUUIDv4(uuid) {  
   return UUIDv4_REGEX.test(uuid) && uuid.length === 36;  
 }  
-function clearError() {  
-  uuidError.value = "";  
-}  
 
-function showError(message) {  
-  uuidError.value = message;  
-  setTimeout(clearError, 5000);
-}  
 async function addReference() {
-  if (!isValidUUIDv4(newReference.value)) {  
-    showError("Ungültige Referenz-ID: Bitte verwenden Sie ein gültiges UUIDv4-Format.");
-    return;
-  }
-  if(managedReferences.value.includes(newReference.value)) {
-    showError("Diese Referenz existiert bereits.");
-    return;
-  }
+  
  
   let data = {};
   loadingAdd.value = true;
@@ -116,6 +108,7 @@ function setElementBlur() {
           v-model="newReference"
           class="mr-3"
           label="Neuen Hilfskraft-Vertrag zuordnen"
+          :rules="rules"
           @keydown.enter="addReference"
         >
           <template #append-innner>
@@ -134,12 +127,6 @@ function setElementBlur() {
           @click="addReference"
           >Hinzufügen</v-btn
         >
-      </div>
-      <!-- Error Message -->  
-      <div v-if="uuidError" class="error-message mb-4">  
-        <v-alert type="error" dense outlined>  
-          {{ uuidError }}  
-        </v-alert>  
       </div>
       <v-expansion-panels
         ><v-expansion-panel>
