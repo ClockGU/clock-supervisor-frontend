@@ -52,8 +52,6 @@ const error = ref("");
 const { mdAndUp } = useDisplay();
 
 
-const landingText = computed(() => t("landing"));  
-
 const hasError = computed(() => error.value !== "");
 async function login() {
   await store.dispatch("setIsLoading");
