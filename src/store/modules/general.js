@@ -1,6 +1,8 @@
 import ApiService from "@/services/api";
+import i18n, { selectedLocale,switchDateFnsLocale } from "@/plugins/i18n";
 
 const state = () => ({
+  locale: selectedLocale,
   loading: false,
   accessToken: undefined,
   refreshToken: undefined,
@@ -10,6 +12,7 @@ const state = () => ({
 });
 
 const getters = {
+  locale: (state) => state.locale,
   isLoading: (state) => state.loading,
   accessToken: (state) => state.accessToken,
   refreshToken: (state) => state.refreshToken,
@@ -19,6 +22,9 @@ const getters = {
 };
 
 const mutations = {
+  updateLocale(state, locale) {
+    state.locale = locale;
+  },
   setLoading: (state, value) => (state.loading = value),
   setAccessToken: (state, value) => (state.accessToken = value),
   setRefreshToken: (state, value) => (state.refreshToken = value),
@@ -73,6 +79,20 @@ const actions = {
   setSupervisedReferences({ commit }, value) {
     commit("setSupervisedReferences", value);
   },
+  async changeLocale({ commit }, locale) {
+    i18n.locale = locale;
+    commit("updateLocale", locale);
+    switchDateFnsLocale(locale);
+    localStorage.setItem("userLocale", locale);
+    await ApiService.setHeader("Accept-Language", locale);
+    try {
+      await ApiService.patch("/auth/users/me/", {
+        language: locale,
+      });
+    } catch (error) {
+      console.error("Error changing locale:", error);
+    }
+  },
   async refreshTokens({ commit, dispatch, getters }) {
     try {
       const response = await ApiService.post("/auth/jwt/refresh", {
@@ -97,3 +117,4 @@ export default {
   getters,
   mutations
 };
+
