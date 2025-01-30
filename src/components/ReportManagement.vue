@@ -12,31 +12,33 @@ const newReference = ref("");
 const loadingAdd = ref(false);
 const loadingRemove = ref(false);
 const icons = reactive({ closeIcon: mdiClose });
-const dialog = ref(false);
 const UUIDv4_REGEX = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/;
-const uuidError = ref("");
 
 const emit = defineEmits(["refetchReports"]);
 const rules = [
   () => {
-    if (!isValidUUIDv4(newReference.value) && newReference.value !== "" )
+    if(newReference.value==="")return
+    return validateRules();
+  },
+];
+function validateRules(){
+  if (!isValidUUIDv4(newReference.value) )
       return "Ungültige Referenz-ID: Bitte verwenden Sie ein gültiges UUIDv4-Format.";
 
     if (managedReferences.value.includes(newReference.value)) {
       return "Diese Referenz existiert bereits.";
     }
-    return true;
-  },
-];
 
+}
 function isValidUUIDv4(uuid) {
   return UUIDv4_REGEX.test(uuid) && uuid.length === 36;
 }
 
 async function addReference() {
-
   let data = {};
   loadingAdd.value = true;
+  console.log(loadingAdd.value);
+  if (validateRules()) return;
   setElementBlur();
   try {
     await store.dispatch("addSupervisedReference", newReference.value);
@@ -54,7 +56,6 @@ async function addReference() {
   newReference.value = "";
   loadingAdd.value = false;
 }
-
 async function removeReference(reference) {
   let data = {};
   loadingRemove.value = true;
@@ -101,11 +102,11 @@ function setElementBlur() {
 <template>
   <v-card style="width: 100%">
     <v-card-text>
-      <div class="d-flex mb-3" style="width: 100%">
+      <div class="d-flex mb-3 " style="width: 100%">
         <span class="icon-center">{{ $t('references.newReferenceLabel') }}:</span>
         <HelpDialog></HelpDialog>
       </div>
-      <div class="d-flex align-center">
+      <div class="d-flex align-center mb-3">
         <v-text-field
           v-model="newReference"
           class="mr-3"
