@@ -9,10 +9,6 @@ const icons = reactive({
 });  
 
 const model = reactive({ value: new Date() });  
-
-function setToLastMonth() {  
-  model.value = subMonths(new Date(), 1);  
-}  
 function goPrev() {  
   model.value = subMonths(model.value, 1);  
 }  
@@ -25,7 +21,7 @@ const formattedDate = computed(() => {
 });  
 
 onMounted(() => {  
-  setToLastMonth();  
+  goPrev();  
 });  
 </script>  
 
