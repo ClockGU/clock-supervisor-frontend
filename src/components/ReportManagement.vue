@@ -8,39 +8,48 @@ import HelpDialog from "@/components/HelpDialog.vue";
 import { version as uuidVersion } from 'uuid';
 import { validate as uuidValidate } from 'uuid';
 
-
 const store = useStore();
 const managedReferences = ref(store.getters.user.supervised_references);
 const newReference = ref("");
 const loadingAdd = ref(false);
 const loadingRemove = ref(false);
 const icons = reactive({ closeIcon: mdiClose });
-
-
 const emit = defineEmits(["refetchReports"]);
+const isTyping = ref(false);
+
 const rules = [
   () => {
-    if(newReference.value==="")returntrue
-    return validateRules();
+    if(newReference.value===""|| isTyping.value)returntrue
+    return rulesValidationMessage()
   },
 ];
-function validateRules(){
+
+//prevent rules validation while typing
+let debounceTimer;
+document.addEventListener('keydown', () => {
+  isTyping.value = true;
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => {
+    isTyping.value = false;
+  }, 500);
+});
+
+
+function rulesValidationMessage(){
   if (!isValidUUIDv4(newReference.value) )
       return "Ungültige Referenz-ID: Bitte verwenden Sie ein gültiges UUIDv4-Format.";
-
-    if (managedReferences.value.includes(newReference.value)) {
-      return "Diese Referenz existiert bereits.";
-    }
-
+  if (managedReferences.value.includes(newReference.value)) {
+    return "Diese Referenz existiert bereits.";
+  }
 }
 function isValidUUIDv4(uuid) {
   return uuidValidate(uuid) && uuidVersion(uuid) === 4;
 }
 
 async function addReference() {
+  if (rulesValidationMessage()) return;
   loadingAdd.value = true;
   let data = {};
-  if (validateRules()) return;
   setElementBlur();
   try {
     await store.dispatch("addSupervisedReference", newReference.value);
@@ -104,7 +113,7 @@ function setElementBlur() {
 <template>
   <v-card style="width: 100%">
     <v-card-text>
-      <div class="d-flex mb-3 " style="width: 100%">
+      <div class="d-flex mb-3" style="width: 100%">
         <span class="icon-center">{{ $t('references.newReferenceLabel') }}:</span>
         <HelpDialog></HelpDialog>
       </div>
