@@ -79,19 +79,10 @@ const actions = {
   setSupervisedReferences({ commit }, value) {
     commit("setSupervisedReferences", value);
   },
-  async changeLocale({ commit }, locale) {
-    i18n.locale = locale;
+  changeLocale({ commit }, locale) {
+    i18n.global.locale = locale;
     commit("updateLocale", locale);
     switchDateFnsLocale(locale);
-    localStorage.setItem("userLocale", locale);
-    await ApiService.setHeader("Accept-Language", locale);
-    try {
-      await ApiService.patch("/auth/users/me/", {
-        language: locale,
-      });
-    } catch (error) {
-      console.error("Error changing locale:", error);
-    }
   },
   async refreshTokens({ commit, dispatch, getters }) {
     try {

@@ -116,6 +116,7 @@ onMounted(async () => {
   console.log(store.getters.user);
   await router.push("/main");
   await store.dispatch("unsetLoading");
+  store.dispatch("changeLocale",user.language);
 });
 </script>
 

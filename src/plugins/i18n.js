@@ -3,9 +3,7 @@ import { de, enUS as en } from "date-fns/locale";
 import { createI18n } from "vue-i18n";
 import deLocale from "../locales/de.json";
 import enLocale from "../locales/en.json";
-import {useStore} from "vuex";
 
-const store = useStore();
 const LOCALES = { de, en };
 
 const localeMessages = {
@@ -21,12 +19,6 @@ export const currentLocale = reactive({ locale: de });
 function checkDefaultLanguage() {
   let matched = null;  
   let languages = Object.getOwnPropertyNames(localeMessages);  
-
-  // Check localStorage first  
-  const savedLocale = localStorage.getItem("userLocale");  
-  if (savedLocale && languages.includes(savedLocale)) {  
-    return savedLocale;  
-  }  
 
   // Check browser's language  
   languages.forEach((lang) => {  

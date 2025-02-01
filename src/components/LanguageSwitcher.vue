@@ -32,10 +32,10 @@
 import { ref, computed } from "vue";
 import { mdiChevronDown, mdiTranslate } from "@mdi/js";
 import { useStore } from "vuex";
-import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
+import i18n from "@/plugins/i18n";
+import ApiService from "@/services/api";
 
-const { locale } = useI18n();
 const { smAndUp } = useDisplay();
 const store = useStore();
 
@@ -46,18 +46,28 @@ const locales = ref([
 ]);
 
 
-const selectedLocale = computed(() => {
-  const match = locales.value.find(
-    (item) => item.locale === locale.value
-  );
-  return match ? match.name : locales.value[0].name;
-});
+const selectedLocale = computed(() => {  
+  const currentLocale = i18n.global.locale; 
+  const match = locales.value.find(  
+    (item) => item.locale === currentLocale  
+  );  
+  return match ? match.name : locales.value[0].name;  
+});  
 
-const switchLocale = async (newLocale) => {
-  if (locale.value === newLocale) return;
-  await store.dispatch("changeLocale", newLocale);
-  locale.value = newLocale;
-};
+const switchLocale = async (newLocale) => {  
+  if (i18n.global.locale === newLocale) return; 
+  await ApiService.setHeader("Accept-Language", newLocale);
+    try {
+      await ApiService.patch("/auth/users/me/", {
+        language: newLocale,
+      });
+    } catch (error) {
+      console.error("Error changing locale:", error);
+    }
+  store.dispatch("changeLocale", newLocale);  
+  i18n.global.locale = newLocale;
+  
+};  
 </script>
 
 
