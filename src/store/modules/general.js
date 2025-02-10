@@ -80,7 +80,7 @@ const actions = {
     commit("setSupervisedReferences", value);
   },
   changeLocale({ commit }, locale) {
-    i18n.global.locale = locale;
+    i18n.global.locale.value = locale;
     commit("updateLocale", locale);
     switchDateFnsLocale(locale);
   },
