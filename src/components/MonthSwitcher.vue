@@ -1,7 +1,10 @@
 <script setup>
 import { computed, reactive } from "vue";
-import { addMonths, subMonths, format } from "date-fns";
+import { addMonths, subMonths } from "date-fns";
 import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
+import { useStore } from 'vuex';
+import { localizedFormat } from "@/utils/date";
+import i18n from "@/plugins/i18n";
 const icons = reactive({
   prev: mdiChevronLeft,
   next: mdiChevronRight
@@ -14,8 +17,8 @@ function goNext() {
   model.value = addMonths(model.value, 1);
 }
 
-const formattedDate = computed(() => {
-  return format(model.value, "MMMM yyyy");
+const formattedDate = computed(() => {  
+  return localizedFormat(model.value, 'MMMM yyyy', { locale: i18n.global.locale.value });  
 });
 </script>
 

@@ -1,4 +1,5 @@
 import ApiService from "@/services/api";
+import i18n, {switchDateFnsLocale } from "@/plugins/i18n";
 
 const state = () => ({
   loading: false,
@@ -10,6 +11,7 @@ const state = () => ({
 });
 
 const getters = {
+  locale: (state) => state.locale,
   isLoading: (state) => state.loading,
   accessToken: (state) => state.accessToken,
   refreshToken: (state) => state.refreshToken,
@@ -73,6 +75,10 @@ const actions = {
   setSupervisedReferences({ commit }, value) {
     commit("setSupervisedReferences", value);
   },
+  changeLocale({ commit }, locale) {
+    i18n.global.locale.value = locale;
+    switchDateFnsLocale(locale);
+  },
   async refreshTokens({ commit, dispatch, getters }) {
     try {
       const response = await ApiService.post("/auth/jwt/refresh", {
@@ -97,3 +103,4 @@ export default {
   getters,
   mutations
 };
+
