@@ -47,7 +47,7 @@ const locales = ref([
 
 
 const selectedLocale = computed(() => {  
-  const currentLocale = i18n.global.locale; 
+  const currentLocale = i18n.global.locale.value; 
   const match = locales.value.find(  
     (item) => item.locale === currentLocale  
   );  
@@ -55,7 +55,7 @@ const selectedLocale = computed(() => {
 });  
 
 const switchLocale = async (newLocale) => {  
-  if (i18n.global.locale === newLocale) return; 
+  if (i18n.global.locale.value === newLocale) return; 
   await ApiService.setHeader("Accept-Language", newLocale);
     try {
       await ApiService.patch("/auth/users/me/", {
@@ -64,9 +64,7 @@ const switchLocale = async (newLocale) => {
     } catch (error) {
       console.error("Error changing locale:", error);
     }
-  store.dispatch("changeLocale", newLocale);  
-  i18n.global.locale = newLocale;
-  
+  store.dispatch("changeLocale",newLocale);    
 };  
 </script>
 
