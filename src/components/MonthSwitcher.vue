@@ -2,9 +2,8 @@
 import { computed, reactive } from "vue";
 import { addMonths, subMonths } from "date-fns";
 import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
-import { useStore } from "vuex";
 import { localizedFormat } from "@/utils/date";
-import { currentLocale } from "@/plugins/i18n";
+import i18n from "@/plugins/i18n";
 const icons = reactive({
   prev: mdiChevronLeft,
   next: mdiChevronRight
@@ -18,11 +17,10 @@ function goNext() {
   model.value = addMonths(model.value, 1);
 }
 
-const store = useStore();
-// Fetch locale from the Vuex store
-
 const formattedDate = computed(() => {
-  return localizedFormat(model.value, "MMMM yyyy", { locale: currentLocale });
+  return localizedFormat(model.value, "MMMM yyyy", {
+    locale: i18n.global.locale.value
+  });
 });
 </script>
 
