@@ -18,7 +18,9 @@ const dialog = ref(false);
     </template>
     <v-card width="600">
       <v-toolbar color="white">
-        <v-card-title style="width: auto">{{ $t("help-tooltip.title") }}</v-card-title>
+        <v-card-title style="width: auto">{{
+          $t("help-tooltip.title")
+        }}</v-card-title>
         <v-spacer />
         <v-btn
           variant="plain"
@@ -35,6 +37,15 @@ const dialog = ref(false);
         <p>{{ $t("help-tooltip.answer3") }}</p>
         <h3>{{ $t("help-tooltip.question4") }}</h3>
         <p>{{ $t("help-tooltip.answer4") }}</p>
+        <h3>{{ $t("help-tooltip.question5") }}</h3>
+        <p>{{ $t("help-tooltip.answer4") }}</p>
+        <i18n-t keypath="help-tooltip.info">
+          <template #link>
+            <a href="https://uni-frankfurt.de/clock#supervisor" target="_blank"
+              >uni-frankfurt.de/clock</a
+            >
+          </template>
+        </i18n-t>
       </v-card-text>
     </v-card>
   </v-dialog>
@@ -53,4 +64,3 @@ p {
   text-indent: 8px;
 }
 </style>
-
