@@ -29,28 +29,36 @@ const dialog = ref(false);
       <v-card-text style="padding: 0 24px 16px">
         <h3>Was muss in diesem Bereich getan werden?</h3>
         <p>
-          In diesem Bereich tragen sie die Vertragsreferenzen der Ihnen
-          untergeordneten Hilfskräfte ein.
+          In diesem Bereich müssen Sie die Referenzen auf die Verträge der Ihnen
+          zugeordneten Hilfskräfte eintragen.
+        </p>
+        <h3>Woher kommen diese Referenzen?</h3>
+        <p>
+          Wenn eine Hilfskraft einen Vertrag in Clock erstellt, so wird eine
+          Referenz-ID erzeugt. Diese muss die Hilfskraft Ihnen zukommen lassen
+          damit Sie die Arbeitszeitdokumentation einsehen können.
         </p>
         <h3>Was bedeuten diese kryptischen Zeichenketten?</h3>
         <p>
-          Die Zeichenketten sind Referenzen zu den Verträgen Ihrer Hilfskräfte
-          in Clock.
+          Die Referenzen werden in Form eines eindeutigen Codes dargestellt und
+          verweisen auf einen konkreten Vertrag einer Hilfskraft in Clock.
         </p>
-        <h3>Woher kommen diese Zeichenketten?</h3>
+        <h3>Ist eine Zeichenkette valide?</h3>
         <p>
-          Erstellt eine Hilfskraft einen Vertrag in Clock so wird eine
-          Zeichenkette erstellt. Diese Muss die Hilfskraft Ihnen zukommen lassen
-          und Sie müssen sie sich hier zuordnen.
-        </p>
-        <h3>
-          Was ist wenn ich mir nicht sicher bin ob eine Zeichenkette valide ist?
-        </h3>
-        <p>
-          Sollten sich mit der Zeit viele dieser Referenzen ansammeln, können
-          Sie mittels des Buttons "Gültigkeit Prüfen" überprüfen, ob diese
+          Mit der Zeit werden sich viele dieser Referenzen ansammeln. Mit dem
+          Button "Gültigkeit Prüfen" können Sie herausfinden, ob diese
           Referenzen noch gültig sind.
         </p>
+        <h3>
+          <p>
+            Weitere Informationen:
+            <a
+              href="https://www.uni-frankfurt.de/f7/clock-zeiterfassung-fur-studentische-hilfskrafte-163850612#a_163850612-47e2c4a3"
+              target="_blank"
+              >uni-frankfurt.de/clock</a
+            >
+          </p>
+        </h3>
       </v-card-text>
     </v-card>
   </v-dialog>

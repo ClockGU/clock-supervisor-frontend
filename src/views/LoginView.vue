@@ -9,7 +9,7 @@
             Ihnen per Mail zugesendet wurde.
           </p>
           <p class="mt-3">
-            Keinen Token erhalten? Kontaktieren Sie den
+            Keinen Token erhalten oder Token ungültig? Kontaktieren Sie den
             <a href="mailto:clock-kontakt@dlist.server.uni-frankfurt.de"
               >Support</a
             >
