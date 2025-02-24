@@ -1,22 +1,55 @@
 <script setup>
 import { useStore } from "vuex";
-import { ref, reactive } from "vue";
-import { mdiClose, mdiCommentQuestion } from "@mdi/js";
+import { ref, reactive, watch } from "vue";
+import { mdiClose,  } from "@mdi/js";
 import { REFERENCE_FIELD_NAME } from "@/main";
 import ApiService from "@/services/api";
 import HelpDialog from "@/components/HelpDialog.vue";
+import { version as uuidVersion } from 'uuid';
+import { validate as uuidValidate } from 'uuid';
+
 const store = useStore();
 const managedReferences = ref(store.getters.user.supervised_references);
 const newReference = ref("");
 const loadingAdd = ref(false);
 const loadingRemove = ref(false);
 const icons = reactive({ closeIcon: mdiClose });
-const dialog = ref(false);
-
 const emit = defineEmits(["refetchReports"]);
+const isTyping = ref(false);
+
+const rules = [  
+  () => {  
+    if(newReference.value===""|| isTyping.value)return true  
+    return rulesValidationMessage()
+  },  
+];
+
+//prevent rules validation while typing
+let debounceTimer;
+document.addEventListener('keydown', () => {
+  isTyping.value = true;
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => {
+    isTyping.value = false;
+  }, 500);
+});
+
+
+function rulesValidationMessage(){
+  if (!isValidUUIDv4(newReference.value) ) 
+      return "Ungültige Referenz-ID: Bitte verwenden Sie ein gültiges UUIDv4-Format.";   
+  if (managedReferences.value.includes(newReference.value)) {  
+    return "Diese Referenz existiert bereits.";  
+  }    
+}
+function isValidUUIDv4(uuid) {  
+  return uuidValidate(uuid) && uuidVersion(uuid) === 4; 
+}  
+
 async function addReference() {
-  let data = {};
+  if (rulesValidationMessage()) return;
   loadingAdd.value = true;
+  let data = {};
   setElementBlur();
   try {
     await store.dispatch("addSupervisedReference", newReference.value);
@@ -84,11 +117,12 @@ function setElementBlur() {
         <span class="icon-center">Hilfskraft-Verträge verwalten:</span>
         <HelpDialog></HelpDialog>
       </div>
-      <div class="d-flex align-center">
+      <div class="d-flex align-center mb-3">
         <v-text-field
           v-model="newReference"
           class="mr-3"
           label="Neuen Hilfskraft-Vertrag zuordnen"
+          :rules="rules"
           @keydown.enter="addReference"
         >
           <template #append-innner>
@@ -180,3 +214,6 @@ function setElementBlur() {
   display: inline-flex
   align-items: center
 </style>
+
+
+
