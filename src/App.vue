@@ -6,9 +6,11 @@
       </v-container>
       <LoadingOverlay />
     </v-main>
+    <AppFooter></AppFooter>
   </v-app>
 </template>
 
 <script setup>
 import LoadingOverlay from "@/components/LoadingOverlay.vue";
+import AppFooter from "./components/AppFooter.vue";
 </script>
