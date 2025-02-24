@@ -41,7 +41,7 @@ const dialog = ref(false);
         <h3>Was bedeuten diese kryptischen Zeichenketten?</h3>
         <p>
           Die Referenzen werden in Form eines eindeutigen Codes dargestellt und
-          verweisen auf einen konkreten Vertrag einer Hilfskraft. in Clock.
+          verweisen auf einen konkreten Vertrag einer Hilfskraft in Clock.
         </p>
         <h3>Ist eine Zeichenkette valide?</h3>
         <p>
