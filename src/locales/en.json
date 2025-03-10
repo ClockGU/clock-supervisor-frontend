@@ -26,8 +26,8 @@
     "debitWorktime": "Required working time",
     "lastMonthCarryOver": "Carry over from last month",
     "nextMonthCarryOver": "Carry over",
-    "absence": "H/S/V",
-    "absenceTypes": "H: Holiday, S: Sick, V: Vacation"
+    "absence": "BH/S/V",
+    "absenceTypes": "BH: Bank holiday, S: Sick, V: Vacation"
   },
   "references": {
     "errors": {

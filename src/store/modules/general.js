@@ -1,5 +1,5 @@
 import ApiService from "@/services/api";
-import i18n, {switchDateFnsLocale } from "@/plugins/i18n";
+import i18n, { switchDateFnsLocale } from "@/plugins/i18n";
 
 const state = () => ({
   loading: false,
@@ -22,6 +22,7 @@ const getters = {
 
 const mutations = {
   setLoading: (state, value) => (state.loading = value),
+  setLocale: (state, value) => (state.locale = value),
   setAccessToken: (state, value) => (state.accessToken = value),
   setRefreshToken: (state, value) => (state.refreshToken = value),
   unsetTokens: (state) => {
@@ -77,6 +78,7 @@ const actions = {
   },
   changeLocale({ commit }, locale) {
     i18n.global.locale.value = locale;
+    commit("setLocale", locale);
     switchDateFnsLocale(locale);
   },
   async refreshTokens({ commit, dispatch, getters }) {
@@ -103,4 +105,3 @@ export default {
   getters,
   mutations
 };
-
