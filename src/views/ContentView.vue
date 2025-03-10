@@ -18,15 +18,15 @@ viewDate.value.setDate(1);
   <v-sheet style="width: 100%; height: 100%">
     <AdminToolbar></AdminToolbar>
     <v-container style="max-width: 1400px">
-      <v-row justify="center">
-        <MonthSwitcher v-model="viewDate"></MonthSwitcher>
-      </v-row>
       <v-row>
         <v-col>
           <ReportManagement
             @refetch-reports="refetechReports = true"
           ></ReportManagement>
         </v-col>
+      </v-row>
+      <v-row justify="center">
+        <MonthSwitcher v-model="viewDate"></MonthSwitcher>
       </v-row>
       <v-row>
         <v-col>
