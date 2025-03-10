@@ -19,13 +19,13 @@ const icons = reactive({ closeIcon: mdiClose });
 const emit = defineEmits(["refetchReports"]);
 const isTyping = ref(false);
 
-const rules = computed(() => {
+const validationErrors = computed(() => {
   console.log(newReference.value, isTyping.value);
   if (newReference.value === "" || isTyping.value) return [];
-  return [rulesValidationMessage()];
+  return validationMessage();
 });
 
-//prevent rules validation while typing
+//prevent validation while typing
 let debounceTimer;
 const handleTyping = () => {
   isTyping.value = true;
@@ -35,19 +35,20 @@ const handleTyping = () => {
   }, 500);
 };
 
-function rulesValidationMessage() {
+function validationMessage() {
   if (!isValidUUIDv4(newReference.value))
-    return t("references.validations.incorrectFormat");
+    return [t("references.validations.incorrectFormat")];
   if (managedReferences.value.includes(newReference.value)) {
-    return t("references.validations.alreadyAssigned");
+    return [t("references.validations.alreadyAssigned")];
   }
+  return [];
 }
 function isValidUUIDv4(uuid) {
   return uuidValidate(uuid) && uuidVersion(uuid) === 4;
 }
 
 async function addReference() {
-  if (rulesValidationMessage()) return;
+  if (validationMessage()) return;
   loadingAdd.value = true;
   let data = {};
   setElementBlur();
@@ -128,7 +129,7 @@ onUnmounted(() => {
           v-model="newReference"
           class="mr-3"
           :label="$t('references.newReferenceLabel')"
-          :error-messages="rules"
+          :error-messages="validationErrors"
           @keydown.enter="addReference"
         >
           <template #append-inner>
