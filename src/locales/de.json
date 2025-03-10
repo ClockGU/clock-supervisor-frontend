@@ -1,0 +1,80 @@
+{
+  "date": "Datum",
+  "start": "Start",
+  "end": "Ende",
+  "break": "Pause",
+  "worktime": "Arbeitszeit",
+  "notes": "Notizen",
+  "add": "Hinzufügen",
+  "help": "Hilfe",
+  "landing": {
+    "welcome": "Willkommen im Vorgesetztenportal von CLOCK",
+    "login": "Login mit HRZ Account"
+  },
+  "authentication": {
+    "title": "Authentifizierung als Führungskraft",
+    "text": "Bitte authentifzieren Sie sich als Führungskraft mit dem Token, der Ihnen per Mail zugesendet wurde.",
+    "help":"Keinen Token erhalten? Kontaktieren Sie den",
+    "fieldLabel": "Authentifizierungstoken",
+    "placeholder":"Kopieren Sie den Token hierein."
+  },
+  "reporting": {
+    "start": "Startzeit",
+    "end": "Endzeit",
+    "break": "Pausenzeit",
+    "worktime": "Arbeitszeit",
+    "notes": "Notizen",
+    "legend": "Legende",
+    "colorCoding": "Farbkodierung",
+    "netWorktime": "Nettoarbeitszeit",
+    "noUnderhours": "Keine Unterstunden",
+    "hasUnderhours": "Hat Unterstunden",
+    "lessThan20Percent": "Weniger als 20% Sollarbeitszeit",
+    "violations": "Warnungen",
+    "noViolations": "Keine Warnungen",
+    "lessThan6Violations": "Weniger als 6 Warnungen",
+    "moreThan6Violations": "Mehr als 6 Warhnungen",
+    "noTimesheetsAvailable": "Keine Stundenzettel zur Einsicht verfügbar",
+    "debitWorktime": "Sollarbeitszeit",
+    "lastMonthCarryOver": "Übertrag aus Vormonat",
+    "nextMonthCarryOver": "Übertrag",
+    "absence": "F/K/U",
+    "absenceTypes": "F: Feiertag, K: Krank, U: Urlaub"
+  },
+  "references": {
+    "errors": {
+      "addReferenceError": "Ein Fehler beim Hinzufügen eines Objekts ist aufgetreten.",
+      "removeReferenceError": "Ein Fehler beim Entfernen eines Objekts ist aufgetreten.",
+      "checkValidityError": "Ein Fehler beim Überprüfen der Gültigkeit der Referenzen ist aufgetreten."
+    },
+    "newReferenceLabel": "Neuen Hilfskraft-Vertrag zuordnen",
+    "managedReferences": "Hilfskraft-Verträge zugeordnet",
+    "checkValidityButton": "Ungültige entfernen"
+  },
+  "violations": {
+    "over10": "Arbeitszeit über 10 Stunden",
+    "notEnoughBreak": "Pausenzeit nicht ausreichend",
+    "notEnoughRest": "Ruhezeit unter 11 Stunden",
+    "after20": "Arbeit nach 20 Uhr",
+    "before8": "Arbeit vor 8 Uhr",
+    "onSunday": "Arbeit an einem Sonntag",
+    "onHoliday": "Arbeit an einem Feiertag"
+  },
+  "help-tooltip": {
+    "title": "Was passiert hier?",
+    "question1": "Was muss in diesem Bereich getan werden?",
+    "answer1": "In diesem Bereich müssen Sie die Referenz-IDs der Ihnen zugeordneten Hilfskräfte eintragen.",
+    "question2": "Was ist eine Referenz-ID?",
+    "answer2": "Eine Referenz-ID ist ein eindeutiger Code, der auf einen konkreten Hilfskraft-Vertrag verweist.",
+    "question3": "Woher bekomme ich eine Referenz-ID?",
+    "answer3": "Wenn eine Hilfskraft einen Vertrag in Clock erstellt, wird eine Referenz-ID erzeugt. Diese muss die Hilfskraft Ihnen zukommen lassen.",
+    "question4": "Ich habe zu viele Referenz-IDs - sind die alle gültig?",
+    "answer4": "Mit der Zeit werden sich viele dieser Referenzen ansammeln. Mit der Schaltfläche \"Ungültige Entfernen\" werden alle nicht mehr gültigen Referenzen entfernt.",
+    "question5": "Wann ist eine Referenz ungültig?",
+    "answer5": "Eine Referenz wird ungültig, wenn der Vertrag abgelaufen ist, gelöscht wird, oder die Hilfskraft eine neue Referenz-ID erzeugt hat.",
+    "info": "Weitere Informationen {link}"
+  },
+  "errors": {
+    "error Occured": "Ein Fehler ist aufgetreten"
+  }
+}
