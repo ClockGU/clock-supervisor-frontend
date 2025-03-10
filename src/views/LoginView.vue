@@ -2,22 +2,21 @@
   <v-row align="center" justify="center" style="height: 100%">
     <v-col class="d-flex justify-center" cols="12">
       <v-card>
-        <v-card-title> Authentifizierung als Führungskraft </v-card-title>
+        <v-card-title> {{ t("authentication.title") }} </v-card-title>
         <v-card-text>
           <p>
-            Bitte authentifzieren Sie sich als Führungskraft mit dem Token, der
-            Ihnen per Mail zugesendet wurde.
+            {{ t("authentication.text") }}
           </p>
           <p class="mt-3">
-            Keinen Token erhalten? Kontaktieren Sie den
+            {{ t("authentication.help") }}
             <a href="mailto:clock-kontakt@dlist.server.uni-frankfurt.de"
               >Support</a
             >
           </p>
           <v-textarea
             v-model="token"
-            label="Authentifizierungstoken"
-            placeholder="Kopieren Sie den Token hierein."
+            :label="t('authentication.fieldLabel')"
+            :placeholder="t('authentication.placeholder')"
           >
           </v-textarea>
         </v-card-text>
@@ -36,12 +35,14 @@ import { onMounted, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import ApiService from "@/services/api";
 import { useStore } from "vuex";
+import { useI18n } from "vue-i18n";
 
 const token = ref("");
 
 const store = useStore();
 const router = useRouter();
 const route = useRoute();
+const { t } = useI18n();
 
 async function logout() {
   await store.dispatch("setIsLoading");
@@ -93,7 +94,9 @@ onMounted(async () => {
     return;
   }
   try {
-    const response = await ApiService.get("/auth/users/me/");
+    const response = await ApiService.patch("/auth/users/me/", {
+      language: store.getters.locale
+    });
     await store.dispatch("setUser", response.data);
   } catch {
     await store.dispatch(
@@ -108,15 +111,13 @@ onMounted(async () => {
     return;
   }
   const user = store.getters.user;
-  console.log(user);
+  await store.dispatch("changeLocale", user.language);
   if (!user.is_supervisor) {
     await store.dispatch("unsetLoading");
     return;
   }
-  console.log(store.getters.user);
   await router.push("/main");
   await store.dispatch("unsetLoading");
-  store.dispatch("changeLocale", user.language);
 });
 </script>
 
