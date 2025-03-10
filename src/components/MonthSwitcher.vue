@@ -19,10 +19,6 @@ function goNext() {
 const formattedDate = computed(() => {
   return format(model.value, "MMMM yyyy");
 });
-
-onMounted(() => {
-  goPrev();
-});
 </script>
 
 <template>
