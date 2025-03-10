@@ -12,6 +12,11 @@
     "login": "Login mit HRZ Account"
   },
   "reporting": {
+    "start": "Startzeit",
+    "end": "Endzeit",
+    "break": "Pausenzeit",
+    "worktime": "Arbeitszeit",
+    "notes": "Notizen",
     "legend": "Legende",
     "colorCoding": "Farbkodierung",
     "netWorktime": "Nettoarbeitszeit",
