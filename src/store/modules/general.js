@@ -2,6 +2,10 @@ import ApiService from "@/services/api";
 import i18n, { switchDateFnsLocale } from "@/plugins/i18n";
 
 const state = () => ({
+  locale:
+    localStorage.getItem("locale") === null
+      ? "de"
+      : localStorage.getItem("locale"),
   loading: false,
   accessToken: undefined,
   refreshToken: undefined,

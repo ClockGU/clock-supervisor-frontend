@@ -54,6 +54,7 @@ const selectedLocale = computed(() => {
 const switchLocale = async (newLocale) => {
   if (i18n.global.locale.value === newLocale) return;
   await ApiService.setHeader("Accept-Language", newLocale);
+  localStorage.setItem("locale", newLocale);
   try {
     await ApiService.patch("/auth/users/me/", {
       language: newLocale
