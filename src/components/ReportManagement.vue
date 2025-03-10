@@ -20,7 +20,7 @@ const emit = defineEmits(["refetchReports"]);
 const isTyping = ref(false);
 
 const validationErrors = computed(() => {
-  if (newReference.value === "" || isTyping.value) return [];
+  if (newReference.value === "" || isTyping.value) return "";
   return validationMessage();
 });
 
@@ -36,11 +36,11 @@ const handleTyping = () => {
 
 function validationMessage() {
   if (!isValidUUIDv4(newReference.value))
-    return [t("references.validations.incorrectFormat")];
+    return t("references.validations.incorrectFormat");
   if (managedReferences.value.includes(newReference.value)) {
-    return [t("references.validations.alreadyAssigned")];
+    return t("references.validations.alreadyAssigned");
   }
-  return [];
+  return "";
 }
 function isValidUUIDv4(uuid) {
   return uuidValidate(uuid) && uuidVersion(uuid) === 4;
@@ -129,7 +129,7 @@ onUnmounted(() => {
           class="mr-3"
           :label="$t('references.newReferenceLabel')"
           :error-messages="validationErrors"
-          @keydown.enter="addReference"
+          @keydown.enter.prevent="addReference"
         >
           <template #append-inner>
             <v-progress-circular
@@ -140,7 +140,7 @@ onUnmounted(() => {
           </template>
         </v-text-field>
         <v-btn
-          :disabled="newReference === '' || validationErrors.length !== 0"
+          :disabled="newReference === '' || validationErrors !== ''"
           class="ml-3"
           style="transform: translate(0px, -12px)"
           @click="addReference"
