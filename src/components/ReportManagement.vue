@@ -20,7 +20,6 @@ const emit = defineEmits(["refetchReports"]);
 const isTyping = ref(false);
 
 const validationErrors = computed(() => {
-  console.log(newReference.value, isTyping.value);
   if (newReference.value === "" || isTyping.value) return [];
   return validationMessage();
 });
@@ -141,7 +140,7 @@ onUnmounted(() => {
           </template>
         </v-text-field>
         <v-btn
-          :disabled="newReference === ''"
+          :disabled="newReference === '' || validationErrors.length !== 0"
           class="ml-3"
           style="transform: translate(0px, -12px)"
           @click="addReference"
