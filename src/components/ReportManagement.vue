@@ -1,6 +1,6 @@
 <script setup>
 import { useStore } from "vuex";
-import { ref, reactive, watch } from "vue";
+import { ref, reactive, watch, computed, onMounted, onUnmounted } from "vue";
 import { mdiClose } from "@mdi/js";
 import { REFERENCE_FIELD_NAME } from "@/main";
 import ApiService from "@/services/api";
@@ -19,22 +19,21 @@ const icons = reactive({ closeIcon: mdiClose });
 const emit = defineEmits(["refetchReports"]);
 const isTyping = ref(false);
 
-const rules = [
-  () => {
-    if (newReference.value === "" || isTyping.value) return true;
-    return rulesValidationMessage();
-  }
-];
+const rules = computed(() => {
+  console.log(newReference.value, isTyping.value);
+  if (newReference.value === "" || isTyping.value) return [];
+  return [rulesValidationMessage()];
+});
 
 //prevent rules validation while typing
 let debounceTimer;
-document.addEventListener("keydown", () => {
+const handleTyping = () => {
   isTyping.value = true;
   clearTimeout(debounceTimer);
   debounceTimer = setTimeout(() => {
     isTyping.value = false;
   }, 500);
-});
+};
 
 function rulesValidationMessage() {
   if (!isValidUUIDv4(newReference.value))
@@ -106,6 +105,13 @@ async function checkValidity() {
 function setElementBlur() {
   setTimeout(() => document.activeElement.blur(), 200);
 }
+
+onMounted(() => {
+  document.addEventListener("keydown", handleTyping);
+});
+onUnmounted(() => {
+  document.removeEventListener("keydown", handleTyping);
+});
 </script>
 
 <template>
@@ -122,7 +128,7 @@ function setElementBlur() {
           v-model="newReference"
           class="mr-3"
           :label="$t('references.newReferenceLabel')"
-          :rules="rules"
+          :error-messages="rules"
           @keydown.enter="addReference"
         >
           <template #append-inner>
