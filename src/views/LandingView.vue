@@ -14,8 +14,11 @@
       :style="!mdAndUp ? { 'justify-content': 'center' } : {}"
     >
       <v-card max-width="600">
+        <v-toolbar flat color="white">
+          <v-spacer /><LanguageSwitcher></LanguageSwitcher>
+        </v-toolbar>
         <v-card-text style="text-align: center">
-          <h2>{{$t("landing.welcome") }}</h2>
+          <h2>{{ $t("landing.welcome") }}</h2>
         </v-card-text>
         <v-card-actions>
           <v-spacer />
@@ -26,7 +29,7 @@
           >
             <template #activator="{ props }">
               <v-btn v-bind="props" variant="elevated" @click="login">
-                {{$t("landing.login") }}
+                {{ $t("landing.login") }}
               </v-btn>
             </template>
             <span style="color: black"> {{ error }}</span>
@@ -44,17 +47,16 @@ import { useStore } from "vuex";
 import ApiService from "@/services/api";
 import { computed, ref } from "vue";
 import { useDisplay } from "vuetify";
-
-
+import LanguageSwitcher from "@/components/LanguageSwitcher.vue";
 const store = useStore();
 const error = ref("");
 
 const { mdAndUp } = useDisplay();
 
-
 const hasError = computed(() => error.value !== "");
 async function login() {
   await store.dispatch("setIsLoading");
+
   try {
     const response = await ApiService.get(
       `/auth/o/authorize/?redirect_uri=${import.meta.env.VITE_PUBLIC_URL}/login`
@@ -70,7 +72,6 @@ async function login() {
     setTimeout(() => (error.value = ""), 5000);
   }
 }
-console.log(mdAndUp);
 const styles = computed(() => (mdAndUp.value ? { height: "100%" } : {}));
 </script>
 
