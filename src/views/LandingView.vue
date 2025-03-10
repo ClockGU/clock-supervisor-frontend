@@ -56,7 +56,6 @@ const { mdAndUp } = useDisplay();
 const hasError = computed(() => error.value !== "");
 async function login() {
   await store.dispatch("setIsLoading");
-
   try {
     const response = await ApiService.get(
       `/auth/o/authorize/?redirect_uri=${import.meta.env.VITE_PUBLIC_URL}/login`

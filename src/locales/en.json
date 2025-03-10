@@ -11,6 +11,13 @@
     "welcome": "Welcome to the Supervisor Portal of CLOCK",
     "login": "Login with HRZ account"
   },
+  "authentication": {
+    "title": "Authentication as supervisor",
+    "text": "Please authenticate as supervisor by submitting the token that was sent via mail.",
+    "help": "Did recieve a token? Please contact the",
+    "fieldLabel": "Authentication token",
+    "placeholder": "Please paste the token here. "
+  },
   "reporting": {
     "start": "Start time",
     "end": "End time",

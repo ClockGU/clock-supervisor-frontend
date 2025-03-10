@@ -11,6 +11,13 @@
     "welcome": "Willkommen im Vorgesetztenportal von CLOCK",
     "login": "Login mit HRZ Account"
   },
+  "authentication": {
+    "title": "Authentifizierung als Führungskraft",
+    "text": "Bitte authentifzieren Sie sich als Führungskraft mit dem Token, der Ihnen per Mail zugesendet wurde.",
+    "help":"Keinen Token erhalten? Kontaktieren Sie den",
+    "fieldLabel": "Authentifizierungstoken",
+    "placeholder":"Kopieren Sie den Token hierein."
+  },
   "reporting": {
     "start": "Startzeit",
     "end": "Endzeit",
