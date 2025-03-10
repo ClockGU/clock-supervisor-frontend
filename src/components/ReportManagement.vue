@@ -1,14 +1,16 @@
 <script setup>
 import { useStore } from "vuex";
 import { ref, reactive, watch } from "vue";
-import { mdiClose,  } from "@mdi/js";
+import { mdiClose } from "@mdi/js";
 import { REFERENCE_FIELD_NAME } from "@/main";
 import ApiService from "@/services/api";
 import HelpDialog from "@/components/HelpDialog.vue";
-import { version as uuidVersion } from 'uuid';
-import { validate as uuidValidate } from 'uuid';
+import { version as uuidVersion } from "uuid";
+import { validate as uuidValidate } from "uuid";
+import { useI18n } from "vue-i18n";
 
 const store = useStore();
+const { t } = useI18n();
 const managedReferences = ref(store.getters.user.supervised_references);
 const newReference = ref("");
 const loadingAdd = ref(false);
@@ -19,14 +21,14 @@ const isTyping = ref(false);
 
 const rules = [
   () => {
-    if(newReference.value===""|| isTyping.value)returntrue
-    return rulesValidationMessage()
-  },
+    if (newReference.value === "" || isTyping.value) return true;
+    return rulesValidationMessage();
+  }
 ];
 
 //prevent rules validation while typing
 let debounceTimer;
-document.addEventListener('keydown', () => {
+document.addEventListener("keydown", () => {
   isTyping.value = true;
   clearTimeout(debounceTimer);
   debounceTimer = setTimeout(() => {
@@ -34,12 +36,11 @@ document.addEventListener('keydown', () => {
   }, 500);
 });
 
-
-function rulesValidationMessage(){
-  if (!isValidUUIDv4(newReference.value) )
-      return "Ungültige Referenz-ID: Bitte verwenden Sie ein gültiges UUIDv4-Format.";
+function rulesValidationMessage() {
+  if (!isValidUUIDv4(newReference.value))
+    return t("references.validations.incorrectFormat");
   if (managedReferences.value.includes(newReference.value)) {
-    return "Diese Referenz existiert bereits.";
+    return t("references.validations.alreadyAssigned");
   }
 }
 function isValidUUIDv4(uuid) {
@@ -58,10 +59,7 @@ async function addReference() {
     emit("refetchReports");
   } catch (e) {
     await store.dispatch("popSupervisedReference", newReference.value);
-    await store.dispatch(
-      "addError",
-      $t("references.errors.addReferenceError")
-    );
+    await store.dispatch("addError", $t("references.errors.addReferenceError"));
     return;
   }
   newReference.value = "";
@@ -114,7 +112,9 @@ function setElementBlur() {
   <v-card style="width: 100%">
     <v-card-text>
       <div class="d-flex mb-3" style="width: 100%">
-        <span class="icon-center">{{ $t('references.newReferenceLabel') }}:</span>
+        <span class="icon-center"
+          >{{ $t("references.newReferenceLabel") }}:</span
+        >
         <HelpDialog></HelpDialog>
       </div>
       <div class="d-flex align-center mb-3">
@@ -144,7 +144,11 @@ function setElementBlur() {
       <v-expansion-panels>
         <v-expansion-panel>
           <v-expansion-panel-title>
-            {{ managedReferences.length + " " + $t("references.managedReferences") }}
+            {{
+              managedReferences.length +
+              " " +
+              $t("references.managedReferences")
+            }}
           </v-expansion-panel-title>
           <v-expansion-panel-text>
             <div class="d-flex align-center">
@@ -211,6 +215,3 @@ function setElementBlur() {
   display: inline-flex
   align-items: center
 </style>
-
-
-

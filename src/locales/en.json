@@ -47,6 +47,10 @@
       "removeReferenceError": "An error occurred while removing an object.",
       "checkValidityError": "An error occurred while checking the validity of the references."
     },
+    "validations": {
+      "incorrectFormat": "Incorrect format: Please use a valid UUIDv4-Format.",
+      "alreadyAssigned": "This reference is already assigned."
+    },
     "newReferenceLabel": "Assign new assistant contract",
     "managedReferences": "Assigned assistant contracts",
     "checkValidityButton": "Remove invalid references"

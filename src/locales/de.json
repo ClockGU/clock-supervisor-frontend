@@ -47,6 +47,10 @@
       "removeReferenceError": "Ein Fehler beim Entfernen eines Objekts ist aufgetreten.",
       "checkValidityError": "Ein Fehler beim Überprüfen der Gültigkeit der Referenzen ist aufgetreten."
     },
+    "validations": {
+      "incorrectFormat": "Ungültige Referenz-ID: Bitte verwenden Sie ein gültiges UUIDv4-Format.",
+      "alreadyAssigned": "Diese Referenz existiert bereits."
+    },
     "newReferenceLabel": "Neuen Hilfskraft-Vertrag zuordnen",
     "managedReferences": "Hilfskraft-Verträge zugeordnet",
     "checkValidityButton": "Ungültige entfernen"
