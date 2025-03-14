@@ -7,6 +7,7 @@ import ReportingDisplay from "@/components/ReportingDisplay.vue";
 import { ref } from "vue";
 import { subMonths } from "date-fns";
 
+
 const store = useStore();
 
 const viewDate = ref(subMonths(new Date(), 1));
@@ -15,7 +16,7 @@ viewDate.value.setDate(1);
 </script>
 
 <template>
-  <v-sheet style="width: 100%; height: 100%">
+  <v-sheet style="width: 100%; height: 100vh; ">
     <AdminToolbar></AdminToolbar>
     <v-container style="max-width: 1400px">
       <v-row>
@@ -36,8 +37,12 @@ viewDate.value.setDate(1);
           ></ReportingDisplay>
         </v-col>
       </v-row>
+
     </v-container>
+   
+
   </v-sheet>
 </template>
 
 <style scoped lang="sass"></style>
+

@@ -48,6 +48,16 @@ const dialog = ref(false);
           </template>
         </i18n-t>
         </p>
+        <h3>
+          <p>
+            Weitere Informationen:
+            <a
+              href="https://www.uni-frankfurt.de/f7/clock-zeiterfassung-fur-studentische-hilfskrafte-163850612#a_163850612-47e2c4a3"
+              target="_blank"
+              >uni-frankfurt.de/clock</a
+            >
+          </p>
+        </h3>
       </v-card-text>
     </v-card>
   </v-dialog>

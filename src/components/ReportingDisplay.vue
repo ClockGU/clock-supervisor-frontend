@@ -140,7 +140,6 @@ function translateAbscence(abscenceType) {
                 <p>{{ t("reporting.lessThan20Percent") }}</p>
               </div>
             </div>
-
             <p style="margin-bottom: 8px; margin-top: 8px">
               {{ t("reporting.violations") }}
             </p>
@@ -228,7 +227,6 @@ function translateAbscence(abscenceType) {
                     <th>{{ t("reporting.end") }}</th>
                     <th>{{ t("reporting.break") }}</th>
                     <th>{{ t("reporting.worktime") }}</th>
-
                     <th>
                       <v-tooltip location="top">
                         <template #activator="{ props }">
