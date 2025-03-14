@@ -1,0 +1,84 @@
+{
+  "date": "Date",
+  "start": "Start",
+  "end": "End",
+  "break": "Break",
+  "worktime": "Worktime",
+  "notes": "Notes",
+  "add": "Add",
+  "help": "Help",
+  "landing": {
+    "welcome": "Welcome to the Supervisor Portal of CLOCK",
+    "login": "Login with HRZ account"
+  },
+  "authentication": {
+    "title": "Authentication as supervisor",
+    "text": "Please authenticate as supervisor by submitting the token that was sent via mail.",
+    "help": "Did recieve a token? Please contact the",
+    "fieldLabel": "Authentication token",
+    "placeholder": "Please paste the token here. "
+  },
+  "reporting": {
+    "start": "Start time",
+    "end": "End time",
+    "break": "Break time",
+    "worktime": "Worktime",
+    "notes": "Notes",
+    "legend": "Legend",
+    "colorCoding": "Color code",
+    "netWorktime": "Net worktime",
+    "noUnderhours": "No Underhours",
+    "hasUnderhours": "Has Underhours",
+    "lessThan20Percent": "Less than 20% of the required working time",
+    "violations": "Warnings",
+    "noViolations": "No warnings",
+    "lessThan6Violations": "Less than 6 warnings",
+    "moreThan6Violations": "More than 6 warnings",
+    "noTimesheetsAvailable": "No timesheets available",
+    "debitWorktime": "Required working time",
+    "lastMonthCarryOver": "Carry over from last month",
+    "nextMonthCarryOver": "Carry over",
+    "absence": "BH/S/V",
+    "absenceTypes": "BH: Bank holiday, S: Sick, V: Vacation"
+  },
+  "references": {
+    "errors": {
+      "addReferenceError": "An error occurred while adding an object.",
+      "removeReferenceError": "An error occurred while removing an object.",
+      "checkValidityError": "An error occurred while checking the validity of the references."
+    },
+    "validations": {
+      "incorrectFormat": "Incorrect format: Please use a valid UUIDv4-Format.",
+      "alreadyAssigned": "This reference is already assigned."
+    },
+    "newReferenceLabel": "Assign new assistant contract",
+    "managedReferences": "Assigned assistant contracts",
+    "checkValidityButton": "Remove invalid references"
+  },
+  "violations": {
+    "over10": "Working time over 10 hours",
+    "notEnoughBreak": "Insufficient break time",
+    "notEnoughRest": "Rest time under 11 hours",
+    "after20": "Work after 8 p.m.",
+    "before8": "Work before 8 a.m.",
+    "onSunday": "Work on a Sunday",
+    "onHoliday": "Work on a holiday"
+  },
+  "help-tooltip": {
+    "title": "What is happening here?",
+    "question1": "What should I do in this view?",
+    "answer1": "In this area, you enter the contract references of the assistants assigned to you.",
+    "question2": "What is a reference ID?",
+    "answer2": "A reference ID is a unique code referencing your assistants' contract in Clock which allows you to view their timesheets.",
+    "question3": "Where do I get a reference ID?",
+    "answer3": "A reference ID is generated upon the creation of a contract in Clock. The assistant must send it to you.",
+    "question4": "I have too many reference IDs - are they all valid?",
+    "answer4": "If many of these references accumulate over time, you can remove invalid references with {checkValidityButton} button.",
+    "question5": "When does an ID become invalid?",
+    "answer5": "A reference becomes invalid if a contract is expired, deleted or if the student assistant generated a new ID.",
+    "info": "Further Information {link}"
+  },
+  "errors": {
+    "error Occured": "An error occurred"
+  }
+}

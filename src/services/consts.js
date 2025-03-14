@@ -1,9 +1,11 @@
 export const VIOLATIONS = {
-  1: "Arbeitszeit über 10 Stunden",
-  2: "Pausenzeit nicht ausreichend",
-  3: "Ruhezeit unter 11 Stunden",
-  4: "Arbeit nach 20 Uhr",
-  5: "Arbeit vor 8 Uhr",
-  6: "Arbeit an einem Sonntag",
-  7: "Arbeit an einem Feiertag"
+  1: t('violations.over10'),
+  2: t('violations.notEnoughBreak'),
+  3: t('violations.notEnoughRest'),
+  4: t('violations.after20'),
+  5: t('violations.before8'),
+  6: t('violations.onSunday'),
+  7: t('violations.onHoliday'),
 };
+
+

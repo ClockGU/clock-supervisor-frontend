@@ -5,7 +5,9 @@ import { parseHHmmToMinutes } from "@/parsers/time";
 import ApiService from "@/services/api";
 import { useStore } from "vuex";
 import ViolationComponent from "@/components/ViolationComponent.vue";
+import {useI18n} from "vue-i18n";
 
+const {t} = useI18n();
 const model = defineModel({ type: Boolean });
 const props = defineProps({
   date: Date
@@ -13,6 +15,7 @@ const props = defineProps({
 const store = useStore();
 
 const reports = ref([]);
+const panels = ref([]);
 
 onBeforeMount(async () => (reports.value = await getReports(props.date)));
 
@@ -28,10 +31,20 @@ watch(
     if (newValue) {
       reports.value = await getReports(props.date);
       model.value = false;
+      if (reports.value.length === 0){
+        panels.value = [];
+      }
     }
   }
 );
 const dialog = ref(false);
+
+const ABSCENCE_TYPES = {
+  F: "BH",
+  K: "S",
+  U: "V"
+};
+
 function getWorktimeColor(report) {
   const debitWorktime = parseHHmmToMinutes(report.general.debit_worktime);
   const netWorktime = parseHHmmToMinutes(report.general.net_worktime);
@@ -70,6 +83,13 @@ async function getReports(dateValue) {
   }
   return response.data;
 }
+
+function translateAbscence(abscenceType) {
+  if (store.getters["locale"] === "en") {
+    return ABSCENCE_TYPES[abscenceType];
+  }
+  return abscenceType;
+}
 </script>
 
 <template>
@@ -82,7 +102,7 @@ async function getReports(dateValue) {
       >
         <template #activator="{ props }">
           <button class="icon-center" v-bind="props" style="margin-left: auto">
-            <p>Legende</p>
+            <p>{{ t("reporting.legend") }}</p>
             <v-icon class="ml-2" color="grey">{{
               mdiInformationOutline
             }}</v-icon>
@@ -90,7 +110,9 @@ async function getReports(dateValue) {
         </template>
         <v-card width="600">
           <v-toolbar color="white">
-            <v-card-title style="width: auto"> Farbkodierung </v-card-title>
+            <v-card-title style="width: auto">
+              {{ t("reporting.colorCoding") }}
+            </v-card-title>
             <v-spacer />
             <v-btn
               variant="plain"
@@ -99,43 +121,44 @@ async function getReports(dateValue) {
             ></v-btn>
           </v-toolbar>
           <v-card-text>
-            <p style="margin-bottom: 8px">Nettoarbeitszeit</p>
+            <p style="margin-bottom: 8px">{{ t("reporting.netWorktime") }}</p>
             <div>
               <div class="icon-center">
                 <v-icon color="success">{{ mdiCircle }}</v-icon>
-                <p>Keine Unterstunden</p>
+                <p>{{ t("reporting.noUnderhours") }}</p>
               </div>
             </div>
             <div>
               <div class="icon-center">
                 <v-icon color="warning">{{ mdiCircle }}</v-icon>
-                <p>Hat Unterstunden</p>
+                <p>{{ t("reporting.hasUnderhours") }}</p>
               </div>
             </div>
             <div>
               <div class="icon-center">
                 <v-icon color="error">{{ mdiCircle }}</v-icon>
-                <p>Weniger als 20% Sollarbeitszeit</p>
+                <p>{{ t("reporting.lessThan20Percent") }}</p>
               </div>
             </div>
-
-            <p style="margin-bottom: 8px; margin-top: 8px">Warnungen</p>
+            <p style="margin-bottom: 8px; margin-top: 8px">
+              {{ t("reporting.violations") }}
+            </p>
             <div>
               <div class="icon-center">
                 <v-icon color="success">{{ mdiCircle }}</v-icon>
-                <span> Keine Warnungen </span>
+                <span> {{ t("reporting.noViolations") }} </span>
               </div>
             </div>
             <div>
               <div class="icon-center">
                 <v-icon color="warning">{{ mdiCircle }}</v-icon>
-                <span> Weniger als 6 Warnungen </span>
+                <span> {{ t("reporting.lessThan6Violations") }} </span>
               </div>
             </div>
             <div>
               <div class="icon-center">
                 <v-icon color="error">{{ mdiCircle }}</v-icon>
-                <span> Mehr als 6 Warnungen </span>
+                <span> {{ t("reporting.moreThan6Violations") }} </span>
               </div>
             </div>
           </v-card-text>
@@ -144,16 +167,16 @@ async function getReports(dateValue) {
     </v-col>
   </v-row>
   <v-row>
-    <v-expansion-panels>
-      <v-expansion-panel v-if="reports.length === 0" disabled>
+    <v-expansion-panels v-model="panels">
+      <v-expansion-panel v-if="reports.length === 0" key="0" disabled>
         <v-expansion-panel-title>
-          Keine Stundenzettel zur Einsicht verfügbar</v-expansion-panel-title
-        >
+          {{ t("reporting.noTimesheetsAvailable") }}
+        </v-expansion-panel-title>
         <v-expansion-panel-text>
-          Keine Stundenzettel zur Einsicht verfügbar
+          {{ t("reporting.noTimesheetsAvailable") }}
         </v-expansion-panel-text>
       </v-expansion-panel>
-      <v-expansion-panel v-for="report in reports" :key="report._id">
+      <v-expansion-panel v-for="report in reports" :key="report._id" :value="report._id">
         <v-expansion-panel-title>
           <v-row justify="center" no-gutters>
             <v-col cols="6">
@@ -161,7 +184,7 @@ async function getReports(dateValue) {
             </v-col>
             <v-col style="align-content: center" cols="3">
               <div class="d-inline-flex" style="align-items: center">
-                <p>Nettoarbeitszeit:</p>
+                <p>{{ t("reporting.netWorktime") }}:</p>
                 <v-icon :color="getWorktimeColor(report)">{{
                   mdiCircle
                 }}</v-icon>
@@ -169,7 +192,7 @@ async function getReports(dateValue) {
             </v-col>
             <v-col cols="3">
               <div class="d-inline-flex" style="align-items: center">
-                <p>Warnungen:</p>
+                <p>{{ t("reporting.violations") }}:</p>
                 <v-icon :color="getNotesColor(report)">{{ mdiCircle }}</v-icon>
               </div>
             </v-col>
@@ -177,39 +200,47 @@ async function getReports(dateValue) {
         </v-expansion-panel-title>
         <v-expansion-panel-text>
           <v-row>
-            <v-col> Sollarbeitszeit: {{ report.general.debit_worktime }}</v-col>
-            <v-col> Nettoarbeitszeit: {{ report.general.net_worktime }}</v-col>
             <v-col>
-              Übertrag aus Vormonat:
+              {{ t("reporting.debitWorktime") }}:
+              {{ report.general.debit_worktime }}</v-col
+            >
+            <v-col>
+              {{ t("reporting.netWorktime") }}:
+              {{ report.general.net_worktime }}</v-col
+            >
+            <v-col>
+              {{ t("reporting.lastMonthCarryOver") }}:
               {{ report.general.last_month_carry_over }}</v-col
             >
-            <v-col> Übertrag: {{ report.general.next_month_carry_over }}</v-col>
+            <v-col>
+              {{ t("reporting.nextMonthCarryOver") }}:
+              {{ report.general.next_month_carry_over }}</v-col
+            >
           </v-row>
           <v-row>
             <v-col>
               <v-table>
                 <thead>
                   <tr>
-                    <th>Datum</th>
-                    <th>Start</th>
-                    <th>Ende</th>
-                    <th>Pause</th>
-                    <th>Arbeitszeit</th>
-
+                    <th>{{ t("date") }}</th>
+                    <th>{{ t("reporting.start") }}</th>
+                    <th>{{ t("reporting.end") }}</th>
+                    <th>{{ t("reporting.break") }}</th>
+                    <th>{{ t("reporting.worktime") }}</th>
                     <th>
                       <v-tooltip location="top">
                         <template #activator="{ props }">
                           <div class="icon-center" v-bind="props">
-                            <p>F/K/U</p>
+                            <p>{{ t("reporting.absence") }}</p>
                             <v-icon class="ml-2" color="grey">{{
                               mdiInformationOutline
                             }}</v-icon>
                           </div>
                         </template>
-                        <span>F: Feiertag, K: Krank, U: Urlaub</span>
+                        <span>{{ t("reporting.absenceTypes") }}</span>
                       </v-tooltip>
                     </th>
-                    <th>Notizen</th>
+                    <th>{{ t("reporting.notes") }}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -222,7 +253,7 @@ async function getReports(dateValue) {
                     <td>{{ obj.stopped }}</td>
                     <td>{{ obj.breaktime }}</td>
                     <td>{{ obj.worktime }}</td>
-                    <td>{{ obj.absence_type }}</td>
+                    <td>{{ translateAbscence(obj.absence_type) }}</td>
                     <td>
                       <span v-if="obj.notes !== ''">
                         <ViolationComponent

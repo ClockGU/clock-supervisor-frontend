@@ -1,6 +1,11 @@
 import ApiService from "@/services/api";
+import i18n, { switchDateFnsLocale } from "@/plugins/i18n";
 
 const state = () => ({
+  locale:
+    localStorage.getItem("locale") === null
+      ? "de"
+      : localStorage.getItem("locale"),
   loading: false,
   accessToken: undefined,
   refreshToken: undefined,
@@ -10,6 +15,7 @@ const state = () => ({
 });
 
 const getters = {
+  locale: (state) => state.locale,
   isLoading: (state) => state.loading,
   accessToken: (state) => state.accessToken,
   refreshToken: (state) => state.refreshToken,
@@ -20,6 +26,7 @@ const getters = {
 
 const mutations = {
   setLoading: (state, value) => (state.loading = value),
+  setLocale: (state, value) => (state.locale = value),
   setAccessToken: (state, value) => (state.accessToken = value),
   setRefreshToken: (state, value) => (state.refreshToken = value),
   unsetTokens: (state) => {
@@ -72,6 +79,11 @@ const actions = {
   },
   setSupervisedReferences({ commit }, value) {
     commit("setSupervisedReferences", value);
+  },
+  changeLocale({ commit }, locale) {
+    i18n.global.locale.value = locale;
+    commit("setLocale", locale);
+    switchDateFnsLocale(locale);
   },
   async refreshTokens({ commit, dispatch, getters }) {
     try {

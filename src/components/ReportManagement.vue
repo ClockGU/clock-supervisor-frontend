@@ -1,22 +1,55 @@
 <script setup>
 import { useStore } from "vuex";
-import { ref, reactive } from "vue";
-import { mdiClose, mdiCommentQuestion } from "@mdi/js";
+import { ref, reactive, watch, computed, onMounted, onUnmounted } from "vue";
+import { mdiClose } from "@mdi/js";
 import { REFERENCE_FIELD_NAME } from "@/main";
 import ApiService from "@/services/api";
 import HelpDialog from "@/components/HelpDialog.vue";
+import { version as uuidVersion } from "uuid";
+import { validate as uuidValidate } from "uuid";
+import { useI18n } from "vue-i18n";
+
 const store = useStore();
+const { t } = useI18n();
 const managedReferences = ref(store.getters.user.supervised_references);
 const newReference = ref("");
 const loadingAdd = ref(false);
 const loadingRemove = ref(false);
 const icons = reactive({ closeIcon: mdiClose });
-const dialog = ref(false);
-
 const emit = defineEmits(["refetchReports"]);
+const isTyping = ref(false);
+
+const validationErrors = computed(() => {
+  if (newReference.value === "" || isTyping.value) return "";
+  return validationMessage();
+});
+
+//prevent validation while typing
+let debounceTimer;
+const handleTyping = () => {
+  isTyping.value = true;
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => {
+    isTyping.value = false;
+  }, 500);
+};
+
+function validationMessage() {
+  if (!isValidUUIDv4(newReference.value))
+    return t("references.validations.incorrectFormat");
+  if (managedReferences.value.includes(newReference.value)) {
+    return t("references.validations.alreadyAssigned");
+  }
+  return "";
+}
+function isValidUUIDv4(uuid) {
+  return uuidValidate(uuid) && uuidVersion(uuid) === 4;
+}
+
 async function addReference() {
-  let data = {};
+  if (validationMessage()) return;
   loadingAdd.value = true;
+  let data = {};
   setElementBlur();
   try {
     await store.dispatch("addSupervisedReference", newReference.value);
@@ -25,10 +58,7 @@ async function addReference() {
     emit("refetchReports");
   } catch (e) {
     await store.dispatch("popSupervisedReference", newReference.value);
-    await store.dispatch(
-      "addError",
-      "Ein Fehler beim hinzufügen eines Objekts ist aufgetreten."
-    );
+    await store.dispatch("addError", $t("references.errors.addReferenceError"));
     return;
   }
   newReference.value = "";
@@ -47,7 +77,7 @@ async function removeReference(reference) {
     await store.dispatch("addSupervisedReference", reference);
     await store.dispatch(
       "addError",
-      "Ein Fehler beim entfernen eines Objekts ist aufgetreten."
+      $t("references.errors.removeReferenceError")
     );
   }
   loadingRemove.value = false;
@@ -63,7 +93,7 @@ async function checkValidity() {
   } catch (e) {
     await store.dispatch(
       "addError",
-      "Ein Fehler beim Überprüfen der Validität der Referenzen ist aufgetreten."
+      $t("references.errors.checkValidityError")
     );
     return;
   }
@@ -75,46 +105,57 @@ async function checkValidity() {
 function setElementBlur() {
   setTimeout(() => document.activeElement.blur(), 200);
 }
+
+onMounted(() => {
+  document.addEventListener("keydown", handleTyping);
+});
+onUnmounted(() => {
+  document.removeEventListener("keydown", handleTyping);
+});
 </script>
 
 <template>
   <v-card style="width: 100%">
     <v-card-text>
       <div class="d-flex mb-3" style="width: 100%">
-        <span class="icon-center">Hilfskraft-Verträge verwalten:</span>
+        <span class="icon-center"
+          >{{ $t("references.newReferenceLabel") }}:</span
+        >
         <HelpDialog></HelpDialog>
       </div>
-      <div class="d-flex align-center">
+      <div class="d-flex align-center mb-3">
         <v-text-field
           v-model="newReference"
           class="mr-3"
-          label="Neuen Hilfskraft-Vertrag zuordnen"
-          @keydown.enter="addReference"
+          :label="$t('references.newReferenceLabel')"
+          :error-messages="validationErrors"
+          @keydown.enter.prevent="addReference"
         >
-          <template #append-innner>
+          <template #append-inner>
             <v-progress-circular
               v-if="loadingAdd"
               color="primary"
               indeterminate
-            >
-            </v-progress-circular>
+            />
           </template>
         </v-text-field>
         <v-btn
-          :disabled="newReference === ''"
+          :disabled="newReference === '' || validationErrors !== ''"
           class="ml-3"
           style="transform: translate(0px, -12px)"
           @click="addReference"
-          >Hinzufügen</v-btn
+          >{{ $t("add") }}</v-btn
         >
       </div>
-      <v-expansion-panels
-        ><v-expansion-panel>
+      <v-expansion-panels>
+        <v-expansion-panel>
           <v-expansion-panel-title>
             {{
-              managedReferences.length + " Hilfskraft-Verträge zugeordnet"
-            }}</v-expansion-panel-title
-          >
+              managedReferences.length +
+              " " +
+              $t("references.managedReferences")
+            }}
+          </v-expansion-panel-title>
           <v-expansion-panel-text>
             <div class="d-flex align-center">
               <v-text-field
@@ -128,8 +169,7 @@ function setElementBlur() {
                     v-if="loadingRemove"
                     color="primary"
                     indeterminate
-                  >
-                  </v-progress-circular>
+                  />
                 </template>
                 <v-chip
                   v-for="reference in managedReferences"
@@ -149,8 +189,9 @@ function setElementBlur() {
                 class="ml-3"
                 style="transform: translate(0px, -12px)"
                 @click="checkValidity"
-                >Gültigkeit Prüfen</v-btn
               >
+                {{ $t("references.checkValidityButton") }}
+              </v-btn>
             </div>
           </v-expansion-panel-text>
         </v-expansion-panel>

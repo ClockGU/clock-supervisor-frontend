@@ -1,12 +1,15 @@
 <script setup>
 import { computed, reactive } from "vue";
-import { addMonths, subMonths, format } from "date-fns";
+import { addMonths, subMonths } from "date-fns";
 import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
+import { localizedFormat } from "@/utils/date";
+import i18n from "@/plugins/i18n";
 const icons = reactive({
   prev: mdiChevronLeft,
   next: mdiChevronRight
 });
-const model = defineModel({ type: Date });
+
+const model = defineModel({ default: new Date(), type: Date });
 function goPrev() {
   model.value = subMonths(model.value, 1);
 }
@@ -15,7 +18,9 @@ function goNext() {
 }
 
 const formattedDate = computed(() => {
-  return format(model.value, "MMMM yyyy");
+  return localizedFormat(model.value, "MMMM yyyy", {
+    locale: i18n.global.locale.value
+  });
 });
 </script>
 
@@ -33,8 +38,7 @@ const formattedDate = computed(() => {
       variant="text"
       :icon="icons.prev"
       @click="goPrev"
-    >
-    </v-btn>
+    ></v-btn>
     <v-spacer />
     <span style="align-self: center">
       {{ formattedDate }}
@@ -43,5 +47,3 @@ const formattedDate = computed(() => {
     <v-btn variant="text" :icon="icons.next" @click="goNext"></v-btn>
   </div>
 </template>
-
-<style scoped lang="sass"></style>
