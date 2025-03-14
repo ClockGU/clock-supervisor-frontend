@@ -5,7 +5,9 @@ import { parseHHmmToMinutes } from "@/parsers/time";
 import ApiService from "@/services/api";
 import { useStore } from "vuex";
 import ViolationComponent from "@/components/ViolationComponent.vue";
+import {useI18n} from "vue-i18n";
 
+const {t} = useI18n();
 const model = defineModel({ type: Boolean });
 const props = defineProps({
   date: Date
@@ -96,7 +98,7 @@ function translateAbscence(abscenceType) {
       >
         <template #activator="{ props }">
           <button class="icon-center" v-bind="props" style="margin-left: auto">
-            <p>{{ $t("reporting.legend") }}</p>
+            <p>{{ t("reporting.legend") }}</p>
             <v-icon class="ml-2" color="grey">{{
               mdiInformationOutline
             }}</v-icon>
@@ -105,7 +107,7 @@ function translateAbscence(abscenceType) {
         <v-card width="600">
           <v-toolbar color="white">
             <v-card-title style="width: auto">
-              {{ $t("reporting.colorCoding") }}
+              {{ t("reporting.colorCoding") }}
             </v-card-title>
             <v-spacer />
             <v-btn
@@ -115,45 +117,45 @@ function translateAbscence(abscenceType) {
             ></v-btn>
           </v-toolbar>
           <v-card-text>
-            <p style="margin-bottom: 8px">{{ $t("reporting.netWorktime") }}</p>
+            <p style="margin-bottom: 8px">{{ t("reporting.netWorktime") }}</p>
             <div>
               <div class="icon-center">
                 <v-icon color="success">{{ mdiCircle }}</v-icon>
-                <p>{{ $t("reporting.noUnderhours") }}</p>
+                <p>{{ t("reporting.noUnderhours") }}</p>
               </div>
             </div>
             <div>
               <div class="icon-center">
                 <v-icon color="warning">{{ mdiCircle }}</v-icon>
-                <p>{{ $t("reporting.hasUnderhours") }}</p>
+                <p>{{ t("reporting.hasUnderhours") }}</p>
               </div>
             </div>
             <div>
               <div class="icon-center">
                 <v-icon color="error">{{ mdiCircle }}</v-icon>
-                <p>{{ $t("reporting.lessThan20Percent") }}</p>
+                <p>{{ t("reporting.lessThan20Percent") }}</p>
               </div>
             </div>
 
             <p style="margin-bottom: 8px; margin-top: 8px">
-              {{ $t("reporting.violations") }}
+              {{ t("reporting.violations") }}
             </p>
             <div>
               <div class="icon-center">
                 <v-icon color="success">{{ mdiCircle }}</v-icon>
-                <span> {{ $t("reporting.noViolations") }} </span>
+                <span> {{ t("reporting.noViolations") }} </span>
               </div>
             </div>
             <div>
               <div class="icon-center">
                 <v-icon color="warning">{{ mdiCircle }}</v-icon>
-                <span> {{ $t("reporting.lessThan6Violations") }} </span>
+                <span> {{ t("reporting.lessThan6Violations") }} </span>
               </div>
             </div>
             <div>
               <div class="icon-center">
                 <v-icon color="error">{{ mdiCircle }}</v-icon>
-                <span> {{ $t("reporting.moreThan6Violations") }} </span>
+                <span> {{ t("reporting.moreThan6Violations") }} </span>
               </div>
             </div>
           </v-card-text>
@@ -165,10 +167,10 @@ function translateAbscence(abscenceType) {
     <v-expansion-panels>
       <v-expansion-panel v-if="reports.length === 0" disabled>
         <v-expansion-panel-title>
-          {{ $t("reporting.noTimesheetsAvailable") }}
+          {{ t("reporting.noTimesheetsAvailable") }}
         </v-expansion-panel-title>
         <v-expansion-panel-text>
-          {{ $t("reporting.noTimesheetsAvailable") }}
+          {{ t("reporting.noTimesheetsAvailable") }}
         </v-expansion-panel-text>
       </v-expansion-panel>
       <v-expansion-panel v-for="report in reports" :key="report._id">
@@ -179,7 +181,7 @@ function translateAbscence(abscenceType) {
             </v-col>
             <v-col style="align-content: center" cols="3">
               <div class="d-inline-flex" style="align-items: center">
-                <p>{{ $t("reporting.netWorktime") }}:</p>
+                <p>{{ t("reporting.netWorktime") }}:</p>
                 <v-icon :color="getWorktimeColor(report)">{{
                   mdiCircle
                 }}</v-icon>
@@ -187,7 +189,7 @@ function translateAbscence(abscenceType) {
             </v-col>
             <v-col cols="3">
               <div class="d-inline-flex" style="align-items: center">
-                <p>{{ $t("reporting.violations") }}:</p>
+                <p>{{ t("reporting.violations") }}:</p>
                 <v-icon :color="getNotesColor(report)">{{ mdiCircle }}</v-icon>
               </div>
             </v-col>
@@ -196,19 +198,19 @@ function translateAbscence(abscenceType) {
         <v-expansion-panel-text>
           <v-row>
             <v-col>
-              {{ $t("reporting.debitWorktime") }}:
+              {{ t("reporting.debitWorktime") }}:
               {{ report.general.debit_worktime }}</v-col
             >
             <v-col>
-              {{ $t("reporting.netWorktime") }}:
+              {{ t("reporting.netWorktime") }}:
               {{ report.general.net_worktime }}</v-col
             >
             <v-col>
-              {{ $t("reporting.lastMonthCarryOver") }}:
+              {{ t("reporting.lastMonthCarryOver") }}:
               {{ report.general.last_month_carry_over }}</v-col
             >
             <v-col>
-              {{ $t("reporting.nextMonthCarryOver") }}:
+              {{ t("reporting.nextMonthCarryOver") }}:
               {{ report.general.next_month_carry_over }}</v-col
             >
           </v-row>
@@ -217,26 +219,26 @@ function translateAbscence(abscenceType) {
               <v-table>
                 <thead>
                   <tr>
-                    <th>{{ $t("date") }}</th>
-                    <th>{{ $t("reporting.start") }}</th>
-                    <th>{{ $t("reporting.end") }}</th>
-                    <th>{{ $t("reporting.break") }}</th>
-                    <th>{{ $t("reporting.worktime") }}</th>
+                    <th>{{ t("date") }}</th>
+                    <th>{{ t("reporting.start") }}</th>
+                    <th>{{ t("reporting.end") }}</th>
+                    <th>{{ t("reporting.break") }}</th>
+                    <th>{{ t("reporting.worktime") }}</th>
 
                     <th>
                       <v-tooltip location="top">
                         <template #activator="{ props }">
                           <div class="icon-center" v-bind="props">
-                            <p>{{ $t("reporting.absence") }}</p>
+                            <p>{{ t("reporting.absence") }}</p>
                             <v-icon class="ml-2" color="grey">{{
                               mdiInformationOutline
                             }}</v-icon>
                           </div>
                         </template>
-                        <span>{{ $t("reporting.absenceTypes") }}</span>
+                        <span>{{ t("reporting.absenceTypes") }}</span>
                       </v-tooltip>
                     </th>
-                    <th>{{ $t("reporting.notes") }}</th>
+                    <th>{{ t("reporting.notes") }}</th>
                   </tr>
                 </thead>
                 <tbody>
