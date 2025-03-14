@@ -30,22 +30,24 @@ const dialog = ref(false);
       </v-toolbar>
       <v-card-text style="padding: 0 24px 16px">
         <h3>{{ $t("help-tooltip.question1") }}</h3>
-        <p>{{ $t("help-tooltip.answer1") }}</p>
+        <span>{{ $t("help-tooltip.answer1") }}</span>
         <h3>{{ $t("help-tooltip.question2") }}</h3>
-        <p>{{ $t("help-tooltip.answer2") }}</p>
+        <span>{{ $t("help-tooltip.answer2") }}</span>
         <h3>{{ $t("help-tooltip.question3") }}</h3>
-        <p>{{ $t("help-tooltip.answer3") }}</p>
+        <span>{{ $t("help-tooltip.answer3") }}</span>
         <h3>{{ $t("help-tooltip.question4") }}</h3>
-        <p>{{ $t("help-tooltip.answer4") }}</p>
+        <span>{{ $t("help-tooltip.answer4") }}</span>
         <h3>{{ $t("help-tooltip.question5") }}</h3>
-        <p>{{ $t("help-tooltip.answer4") }}</p>
-        <i18n-t keypath="help-tooltip.info">
+        <span>{{ $t("help-tooltip.answer4") }}</span>
+        <p class="mt-4" style="text-indent: 0">
+          <i18n-t keypath="help-tooltip.info">
           <template #link>
             <a href="https://uni-frankfurt.de/clock#supervisor" target="_blank"
               >uni-frankfurt.de/clock</a
             >
           </template>
         </i18n-t>
+        </p>
       </v-card-text>
     </v-card>
   </v-dialog>

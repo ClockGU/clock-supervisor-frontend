@@ -1,7 +1,19 @@
 <script setup>
 import { mdiInformationOutline } from "@mdi/js";
-import { VIOLATIONS } from "@/services/consts";
-import { computed, onMounted, ref, useTemplateRef, watchEffect } from "vue";
+import { computed, ref } from "vue";
+import {useI18n} from "vue-i18n";
+
+const { t } = useI18n();
+
+const VIOLATIONS = {
+  1: () => t('violations.over10'),
+  2: () => t('violations.notEnoughBreak'),
+  3: () => t('violations.notEnoughRest'),
+  4: () => t('violations.after20'),
+  5: () => t('violations.before8'),
+  6: () => t('violations.onSunday'),
+  7: () => t('violations.onHoliday'),
+};
 
 const componentProps = defineProps({
   violations: { type: String, default: "" }
@@ -10,7 +22,7 @@ const show = ref(false);
 const readableVersions = computed(() => {
   let result = [];
   for (const note of componentProps.violations.split(",")) {
-    result.push(VIOLATIONS[note]);
+    result.push(VIOLATIONS[note]());
   }
   return result;
 });
