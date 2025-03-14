@@ -15,6 +15,7 @@ const props = defineProps({
 const store = useStore();
 
 const reports = ref([]);
+const panels = ref([]);
 
 onBeforeMount(async () => (reports.value = await getReports(props.date)));
 
@@ -30,6 +31,9 @@ watch(
     if (newValue) {
       reports.value = await getReports(props.date);
       model.value = false;
+      if (reports.value.length === 0){
+        panels.value = [];
+      }
     }
   }
 );
@@ -164,8 +168,8 @@ function translateAbscence(abscenceType) {
     </v-col>
   </v-row>
   <v-row>
-    <v-expansion-panels>
-      <v-expansion-panel v-if="reports.length === 0" disabled>
+    <v-expansion-panels v-model="panels">
+      <v-expansion-panel v-if="reports.length === 0" key="0" disabled>
         <v-expansion-panel-title>
           {{ t("reporting.noTimesheetsAvailable") }}
         </v-expansion-panel-title>
@@ -173,7 +177,7 @@ function translateAbscence(abscenceType) {
           {{ t("reporting.noTimesheetsAvailable") }}
         </v-expansion-panel-text>
       </v-expansion-panel>
-      <v-expansion-panel v-for="report in reports" :key="report._id">
+      <v-expansion-panel v-for="report in reports" :key="report._id" :value="report._id">
         <v-expansion-panel-title>
           <v-row justify="center" no-gutters>
             <v-col cols="6">
