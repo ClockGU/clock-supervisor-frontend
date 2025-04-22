@@ -5,9 +5,9 @@ import { parseHHmmToMinutes } from "@/parsers/time";
 import ApiService from "@/services/api";
 import { useStore } from "vuex";
 import ViolationComponent from "@/components/ViolationComponent.vue";
-import {useI18n} from "vue-i18n";
+import { useI18n } from "vue-i18n";
 
-const {t} = useI18n();
+const { t } = useI18n();
 const model = defineModel({ type: Boolean });
 const props = defineProps({
   date: Date
@@ -31,7 +31,7 @@ watch(
     if (newValue) {
       reports.value = await getReports(props.date);
       model.value = false;
-      if (reports.value.length === 0){
+      if (reports.value.length === 0) {
         panels.value = [];
       }
     }
@@ -47,8 +47,8 @@ const ABSCENCE_TYPES = {
 
 function getWorktimeColor(report) {
   const debitWorktime = parseHHmmToMinutes(report.general.debit_worktime);
-  const netWorktime = parseHHmmToMinutes(report.general.net_worktime);
-  const missingWorktime = debitWorktime - netWorktime;
+  const totalTimeWorked = parseHHmmToMinutes(report.general.total_worked_time);
+  const missingWorktime = debitWorktime - totalTimeWorked;
 
   if (parseHHmmToMinutes(report.general.next_month_carry_over) >= 0) {
     return "success";
@@ -176,7 +176,11 @@ function translateAbscence(abscenceType) {
           {{ t("reporting.noTimesheetsAvailable") }}
         </v-expansion-panel-text>
       </v-expansion-panel>
-      <v-expansion-panel v-for="report in reports" :key="report._id" :value="report._id">
+      <v-expansion-panel
+        v-for="report in reports"
+        :key="report._id"
+        :value="report._id"
+      >
         <v-expansion-panel-title>
           <v-row justify="center" no-gutters>
             <v-col cols="6">
@@ -206,7 +210,7 @@ function translateAbscence(abscenceType) {
             >
             <v-col>
               {{ t("reporting.netWorktime") }}:
-              {{ report.general.net_worktime }}</v-col
+              {{ report.general.total_worked_time }}</v-col
             >
             <v-col>
               {{ t("reporting.lastMonthCarryOver") }}:
